@@ -27,6 +27,14 @@ window.switchWorkTab = (tabKey) => {
       button.setAttribute('aria-pressed', String(active));
     }
   });
+
+  const activePanel = document.getElementById(`tab-panel-${selected}`);
+  window.setTimeout(() => {
+    activePanel?.scrollIntoView({
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      block: 'start',
+    });
+  }, 0);
 };
 
 document.querySelectorAll('.faq-item').forEach((item) => {

@@ -38,6 +38,15 @@ a:focus-visible {
   padding-bottom: clamp(3.5rem, 7vw, 5rem);
 }
 
+.hero-route-lines {
+  display: none;
+}
+
+.hero-pattern {
+  display: block;
+  opacity: 0.4;
+}
+
 .hero-headline {
   font-size: clamp(3rem, 6.1vw, 5.5rem);
   line-height: 0.98;
@@ -50,7 +59,7 @@ a:focus-visible {
   margin: 1rem 0 0;
   padding: 0;
   list-style: none;
-  color: #f7faf0;
+  color: #010e09;
 }
 
 .hero-benefits li {
@@ -71,9 +80,9 @@ a:focus-visible {
   box-shadow: 2px 2px 0 #010e09;
 }
 
-.benefit-mark-coral { background: #f84f94; }
-.benefit-mark-green { background: #00d37f; }
-.benefit-mark-lime { background: #b0d226; }
+.benefit-mark-coral,
+.benefit-mark-green,
+.benefit-mark-lime { background: #010e09; }
 
 .hero-copy .subhead-text {
   max-width: 38ch;
@@ -113,6 +122,14 @@ a:focus-visible {
   min-height: 4rem;
 }
 
+.suite-card {
+  scroll-margin-top: 7rem;
+}
+
+.tab-panel {
+  scroll-margin-top: 9rem;
+}
+
 @media (max-width: 767px) {
   body {
     padding-bottom: 4.5rem;
@@ -146,7 +163,7 @@ a:focus-visible {
   }
 
   .hero-section {
-    padding-top: 7.75rem;
+    padding-top: 10.75rem;
     padding-bottom: 3.25rem;
   }
 
@@ -215,6 +232,26 @@ a:focus-visible {
 
   .hero-visual .hero-card-2 > div:last-child > div:last-child {
     font-size: 0.9rem;
+  }
+
+  .suite-cards {
+    display: block;
+  }
+
+  .suite-card {
+    position: sticky;
+    top: var(--stack-top, 92px);
+    z-index: var(--stack-index, 1);
+    margin-bottom: 1.25rem;
+    transform-origin: center top;
+  }
+
+  .suite-card:last-child {
+    margin-bottom: 0;
+  }
+
+  .tab-panel {
+    scroll-margin-top: 8.5rem;
   }
 
   .tab-panel .max-w-\[1440px\],
@@ -288,6 +325,21 @@ a:focus-visible {
 
   .faq-trigger > span:first-child {
     font-size: 1rem;
+  }
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .suite-card {
+      animation: suiteCardReveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 42%;
+    }
+
+    @keyframes suiteCardReveal {
+      from { opacity: 0.65; transform: translateY(20px) scale(0.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
   }
 }
 

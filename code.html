@@ -157,7 +157,7 @@
       }
     }
     .hero-wave-animated {
-      animation: waveDrift 30s ease-in-out infinite alternate;
+      animation: waveDrift 22s linear infinite alternate;
     }
 
     /* Route lines between hero cards */
@@ -224,12 +224,6 @@
 </head>
 <body class="selection:bg-[#010E09] selection:text-[#B0D226]">
 <svg aria-hidden="true" class="inline-defs-container" style="position:absolute;width:0;height:0;overflow:hidden"></svg>
-<!-- 1. ANNOUNCEMENT BAR -->
-<aside class="announcement-bar w-full h-[40px] bg-[#010E09] text-[#F7FAF0] px-4 lg:px-12 flex items-center justify-center text-center text-[13px] sm:text-[14px] font-medium gap-3 z-50 relative">
-<a class="text-[#B0D226] font-semibold whitespace-nowrap hover:underline" href="#see-in-action" onclick="switchWorkTab('prymsearch')">
-    Pre-register for Prymsearch →
-  </a>
-</aside>
 <!-- 2. NAVIGATION: RESTRAINED FLOATING PILL BAR -->
 <div class="sticky top-4 z-40 px-4 sm:px-6 pointer-events-none mb-[-80px]">
 <header class="floating-nav max-w-6xl mx-auto h-[64px] bg-[#F7FAF0] border border-[#D2D8C7] rounded-full px-5 sm:px-7 flex items-center justify-between pointer-events-auto shadow-sm" id="main-nav-bar">
@@ -265,44 +259,38 @@
     </a>
 </header>
 </div>
-<!-- 3. HERO: DARKER AND MORE ALIVE (Agent Ink #101820) -->
-<section class="hero-section w-full min-h-[90vh] bg-[#101820] text-[#F7FAF0] pt-28 pb-16 lg:pt-32 lg:pb-20 px-6 lg:px-12 relative overflow-hidden flex items-center">
+<!-- 3. HERO: AGENT LIME WITH PRYM BLACK TYPE -->
+<section class="hero-section w-full min-h-[90vh] bg-[#B0D226] text-[#010E09] pt-28 pb-16 lg:pt-32 lg:pb-20 px-6 lg:px-12 relative overflow-hidden flex items-center">
 <!-- SVG Layer: Agent Lime wave lines and dot grid (~18% opacity) with 30s CSS drifting wave animation -->
-<div class="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.18]">
+<div class="hero-pattern absolute inset-0 pointer-events-none overflow-hidden opacity-[0.18]">
 <svg class="hero-wave-animated w-[140%] h-[140%] -top-[20%] -left-[20%] absolute" fill="none" preserveaspectratio="none" viewbox="0 0 1600 1000">
-<defs>
-<pattern height="36" id="hero-lime-dots" patternunits="userSpaceOnUse" width="36" x="0" y="0">
-<circle cx="2" cy="2" fill="#B0D226" r="1.5"></circle>
-</pattern>
-</defs>
-<rect fill="url(#hero-lime-dots)" height="1000" width="1600"></rect>
-<!-- Crisp wave lines without blur or gradients -->
-<path d="M-80,450 C360,260 760,680 1680,280" stroke="#B0D226" stroke-width="2.5"></path>
-<path d="M-80,560 C420,380 820,760 1680,390" stroke="#B0D226" stroke-width="2"></path>
-<path d="M-80,680 C320,490 890,830 1680,500" stroke="#B0D226" stroke-width="1.5"></path>
+<!-- Brand-ink wave lines move gently across the lime field. -->
+<path d="M-80,450 C360,260 760,680 1680,280" stroke="#010E09" stroke-opacity="0.35" stroke-width="2.5"></path>
+<path d="M-80,560 C420,380 820,760 1680,390" stroke="#010E09" stroke-opacity="0.25" stroke-width="2"></path>
+<path d="M-80,680 C320,490 890,830 1680,500" stroke="#010E09" stroke-opacity="0.18" stroke-width="1.5"></path>
 </svg>
 </div>
 <div class="max-w-[1440px] w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
 <!-- Left Column (~55% -> 7 cols) -->
 <div class="hero-copy lg:col-span-7 flex flex-col items-start pr-0 lg:pr-4">
 <h1 class="hero-headline">
-<span class="block text-[#F84F94]">Get paid.</span>
-<span class="block text-[#B0D226]">Get found.</span>
-<span class="block text-[#00D37F]">Get trusted.</span>
+<span class="block text-[#010E09]">Get paid.</span>
+<span class="block text-[#010E09]">Get discovered.</span>
+<span class="block text-[#010E09]">Get trusted.</span>
 </h1>
-<p class="subhead-text text-[#F7FAF0] mt-6 max-w-[48ch]">
+<p class="subhead-text text-[#010E09] mt-6 max-w-[48ch]">
         Prymsuite is the business toolkit for professionals, consultants, and service providers.
       </p>
 <ul class="hero-benefits" aria-label="What you can do with Prymsuite">
 <li><span class="benefit-mark benefit-mark-coral" aria-hidden="true"></span><span>Invoice your clients.</span></li>
 <li><span class="benefit-mark benefit-mark-green" aria-hidden="true"></span><span>Build your own professional site that takes payment.</span></li>
-<li><span class="benefit-mark benefit-mark-lime" aria-hidden="true"></span><span>Get found.</span></li>
+<li><span class="benefit-mark benefit-mark-lime" aria-hidden="true"></span><span>Get discovered.</span></li>
 </ul>
 <div class="mt-8 flex flex-wrap items-center gap-5 sm:gap-7">
-<a class="btn-pill h-[56px] px-8 bg-[#B0D226] text-[#010E09] text-[16px] font-bold shadow-[4px_4px_0px_#010E09] hover:bg-[#c2e431]" href="https://wa.me/" rel="noopener noreferrer" target="_blank">
+<a class="btn-pill h-[56px] px-8 bg-[#010E09] text-[#F7FAF0] text-[16px] font-bold shadow-[4px_4px_0px_#010E09] hover:bg-[#161D25]" href="https://wa.me/" rel="noopener noreferrer" target="_blank">
           Start on WhatsApp
         </a>
-<a class="text-[16px] font-semibold text-[#F7FAF0] hover:text-[#B0D226] hover:underline flex items-center gap-1.5 transition-colors" href="#see-in-action">
+<a class="text-[16px] font-semibold text-[#010E09] hover:underline flex items-center gap-1.5 transition-colors" href="#see-in-action">
           See how the three fit together ↓
         </a>
 </div>
@@ -310,7 +298,7 @@
 <!-- Right Column (~45% -> 5 cols): Professional cutout photograph with 5 floating cards & Flow Cyan route lines -->
 <div class="hero-visual lg:col-span-5 relative flex items-center justify-center min-h-[540px] lg:min-h-[620px]">
 <!-- SVG Connecting Flow Cyan Route Lines -->
-<svg class="absolute inset-0 w-full h-full pointer-events-none z-10" fill="none" viewbox="0 0 500 620">
+<svg class="hero-route-lines absolute inset-0 w-full h-full pointer-events-none z-10" fill="none" viewbox="0 0 500 620">
 <!-- Route Line 1: Card 1 to Card 2 -->
 <path class="hero-route-line" d="M 120 40 C 240 60, 310 120, 340 180" stroke="#48D7FF" stroke-linecap="round" stroke-width="2"></path>
 <!-- Route Line 2: Card 2 to Card 4 -->
@@ -357,7 +345,7 @@
 <span class="text-[11px] text-[#D2D8C7]">Prymsearch</span>
 </div>
 <p class="text-[#F7FAF0] font-medium leading-snug">
-          A client found your profile.
+          A client discovered your profile.
         </p>
 </div>
 </div>
@@ -369,9 +357,9 @@
 <h2 class="section-headline text-[#010E09] mb-12 max-w-[20ch]">
       Three tools. One place for your business.
     </h2>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+<div class="suite-cards grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
 <!-- Tile 1: PrymAgent (Solo Coral tint #FDF0F5) -->
-<div class="bg-[#FDF0F5] rounded-[24px] border border-[#010E09] p-7 lg:p-8 flex flex-col justify-between hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_#010E09]">
+<div class="suite-card bg-[#FDF0F5] rounded-[24px] border border-[#010E09] p-7 lg:p-8 flex flex-col justify-between hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_#010E09]" style="--stack-index:1;--stack-top:92px">
 <div>
 <div class="flex items-center justify-between mb-6">
 <span class="px-3 py-1 rounded-full bg-[#010E09] text-[#F7FAF0] text-[12px] font-bold">
@@ -393,7 +381,7 @@
 </div>
 </div>
 <!-- Tile 2: Pages (Dynamic Green tint #EBFBF3) -->
-<div class="bg-[#EBFBF3] rounded-[24px] border border-[#010E09] p-7 lg:p-8 flex flex-col justify-between hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_#010E09]">
+<div class="suite-card bg-[#EBFBF3] rounded-[24px] border border-[#010E09] p-7 lg:p-8 flex flex-col justify-between hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_#010E09]" style="--stack-index:2;--stack-top:106px">
 <div>
 <div class="flex items-center justify-between mb-6">
 <span class="px-3 py-1 rounded-full bg-[#101820] text-[#00D37F] text-[12px] font-bold border border-[#00D37F]/40">
@@ -415,7 +403,7 @@
 </div>
 </div>
 <!-- Tile 3: Prymsearch (Agent Lime tint #F4F8DE) -->
-<div class="bg-[#F4F8DE] rounded-[24px] border border-[#010E09] p-7 lg:p-8 flex flex-col justify-between hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_#010E09]">
+<div class="suite-card bg-[#F4F8DE] rounded-[24px] border border-[#010E09] p-7 lg:p-8 flex flex-col justify-between hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_#010E09]" style="--stack-index:3;--stack-top:120px">
 <div>
 <div class="flex items-center justify-between mb-6">
 <span class="px-3 py-1 rounded-full bg-[#010E09] text-[#B0D226] text-[12px] font-bold">
@@ -424,7 +412,7 @@
 <span class="text-[14px] font-semibold text-[#010E09]">Prymsearch</span>
 </div>
 <h3 class="card-title text-[#010E09] text-[24px] mb-3">
-            Get found by people who need you.
+            Get discovered by people who need you.
           </h3>
 <p class="body-text text-[#010E09] mb-8">
             Clients describe what they need in plain English. Prymsearch matches verified professionals and consultants, and shows the reason for each match.
@@ -452,23 +440,23 @@
 <div class="sticky top-[88px] z-30 bg-[#E6EBDD] border-b border-black/10 py-3 px-6 lg:px-12" id="walkthrough-sticky-bar">
 <div class="max-w-[1440px] mx-auto flex items-center justify-between">
 <div class="flex items-center gap-2 p-1.5 rounded-full bg-black/10 backdrop-blur-sm border border-black/15">
-<button class="px-5 sm:px-6 py-2 rounded-full text-[14px] font-bold transition-all text-[#010E09] hover:bg-black/10" id="tab-btn-prymagent" onclick="switchWorkTab('prymagent')">
+<button class="px-5 sm:px-6 py-2 rounded-full text-[14px] font-bold transition-all bg-[#010E09] text-[#F7FAF0] shadow-sm" id="tab-btn-prymagent" aria-pressed="true" onclick="switchWorkTab('prymagent')">
           PrymAgent
         </button>
-<button class="px-5 sm:px-6 py-2 rounded-full text-[14px] font-bold transition-all bg-[#010E09] text-[#F7FAF0] shadow-sm" id="tab-btn-pages" onclick="switchWorkTab('pages')">
+<button class="px-5 sm:px-6 py-2 rounded-full text-[14px] font-bold transition-all text-[#010E09] hover:bg-black/10" id="tab-btn-pages" aria-pressed="false" onclick="switchWorkTab('pages')">
           Pages
         </button>
 <button class="px-5 sm:px-6 py-2 rounded-full text-[14px] font-bold transition-all text-[#010E09] hover:bg-black/10" id="tab-btn-prymsearch" onclick="switchWorkTab('prymsearch')">
           Prymsearch
         </button>
 </div>
-<div class="hidden sm:block text-[13px] font-semibold opacity-75" id="walkthrough-active-indicator">Tab: Pages professional site</div>
+<div class="hidden sm:block text-[13px] font-semibold opacity-75" id="walkthrough-active-indicator">Tab: PrymAgent billing</div>
 </div>
 </div>
 <!-- Content Container -->
 <div class="py-12 lg:py-16 bg-[#E6EBDD]">
 <!-- ================= TAB 1: PRYMAGENT ================= -->
-<div class="tab-panel transition-opacity duration-300 hidden bg-[#E6EBDD]" id="tab-panel-prymagent">
+<div class="tab-panel transition-opacity duration-300 block bg-[#E6EBDD]" id="tab-panel-prymagent">
 <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
 <!-- Part 1: How it works (5 Steps + Dashboard) -->
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center mb-16">
@@ -624,7 +612,7 @@
 </div>
 </div>
 <!-- ================= TAB 2: PAGES (WEBSITE MOCKUP, UNIFIED WARM GRAY #E6EBDD) ================= -->
-<div class="tab-panel transition-opacity duration-300 block bg-[#E6EBDD]" id="tab-panel-pages">
+<div class="tab-panel transition-opacity duration-300 hidden bg-[#E6EBDD]" id="tab-panel-pages">
 <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
 <!-- Main Pages Header -->
 <div class="max-w-[820px] mb-16">
@@ -912,7 +900,7 @@
               Pre-registration open
             </span>
 <h3 class="section-headline text-[#010E09] mb-4">
-              Be found by people already looking.
+              Be discovered by people already looking.
             </h3>
 <p class="subhead-text text-[#010E09]">
               Clients describe the job in plain English. Prymsearch shortlists verified professionals and consultants, and shows the reason for each match. Join the pool, and your profile is ready when they search.
@@ -1001,13 +989,9 @@
 </section>
 <!-- 6. HOW THE THREE WORK TOGETHER (Ledger Navy #161D25) -->
 <section class="w-full bg-[#161D25] text-[#F7FAF0] py-20 lg:py-28 px-6 lg:px-12 relative overflow-hidden" id="loop-section">
-<!-- Subtle wave & dot grid SVG pattern at 15% opacity -->
+<!-- Subtle wave and dot grid SVG pattern at 15% opacity -->
 <svg aria-hidden="true" class="absolute inset-0 w-full h-full pointer-events-none opacity-15" fill="none" preserveaspectratio="none" viewbox="0 0 1440 600">
-<defs>
-<pattern height="32" id="ledger-dots" patternunits="userSpaceOnUse" width="32" x="0" y="0">
-<circle cx="2" cy="2" fill="#B0D226" r="1.5"></circle>
-</pattern>
-</defs>
+<defs><pattern height="32" id="ledger-dots" patternunits="userSpaceOnUse" width="32" x="0" y="0"><circle cx="2" cy="2" fill="#B0D226" r="1.5"></circle></pattern></defs>
 <rect fill="url(#ledger-dots)" height="600" width="1440"></rect>
 <path d="M-40 380 C 340 220, 720 540, 1480 200" stroke="#B0D226" stroke-width="2.5"></path>
 <path d="M-40 460 C 380 300, 780 580, 1480 280" stroke="#48D7FF" stroke-width="2"></path>
@@ -1015,94 +999,32 @@
 <div class="max-w-[1440px] mx-auto relative z-10">
 <div class="text-center max-w-[800px] mx-auto mb-14">
 <span class="ui-label text-[#B0D226] uppercase tracking-wider block mb-3">Continuous Flywheel</span>
-<h2 class="section-headline text-[#F7FAF0]">
-        One loop. Found, booked, paid, proven.
-      </h2>
+<h2 class="section-headline text-[#F7FAF0]">One loop. Discovered, booked, paid, proven.</h2>
 </div>
-<!-- 4-Stop Diagram -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch mb-12">
-<!-- Stop 1: Found -->
 <div class="bg-[#101820] rounded-[24px] border border-[#2A3440] p-6 lg:p-7 flex flex-col justify-between shadow-[4px_4px_0px_#010E09] hover:border-[#B0D226] transition-colors">
-<div>
-<div class="w-12 h-12 rounded-full bg-[#B0D226] text-[#010E09] font-extrabold text-[18px] flex items-center justify-center mb-5">
-            1
-          </div>
-<div class="text-[12px] font-bold text-[#B0D226] uppercase tracking-wider mb-1">Prymsearch</div>
-<h3 class="text-[20px] font-bold text-[#F7FAF0] mb-3">Found</h3>
-<p class="body-text text-[#D2D8C7]">
-            A client describes what they need in simple words, and finds your verified listing.
-          </p>
+<div><div class="w-12 h-12 rounded-full bg-[#B0D226] text-[#010E09] font-extrabold text-[18px] flex items-center justify-center mb-5">1</div><div class="text-[12px] font-bold text-[#B0D226] uppercase tracking-wider mb-1">Prymsearch</div><h3 class="text-[20px] font-bold text-[#F7FAF0] mb-3">Discovered</h3><p class="body-text text-[#D2D8C7]">A client describes what they need in simple words and discovers your verified listing.</p></div>
+<div class="mt-6 pt-4 border-t border-[#2A3440] text-[13px] text-[#7D8578]">Inbound discovery</div>
 </div>
-<div class="mt-6 pt-4 border-t border-[#2A3440] text-[13px] text-[#7D8578]">
-          Inbound discovery
-        </div>
-</div>
-<!-- Stop 2: Booked -->
 <div class="bg-[#101820] rounded-[24px] border border-[#2A3440] p-6 lg:p-7 flex flex-col justify-between shadow-[4px_4px_0px_#010E09] hover:border-[#00D37F] transition-colors">
-<div>
-<div class="w-12 h-12 rounded-full bg-[#00D37F] text-[#010E09] font-extrabold text-[18px] flex items-center justify-center mb-5">
-            2
-          </div>
-<div class="text-[12px] font-bold text-[#00D37F] uppercase tracking-wider mb-1">Pages</div>
-<h3 class="text-[20px] font-bold text-[#F7FAF0] mb-3">Booked</h3>
-<p class="body-text text-[#D2D8C7]">
-            They book a session, purchase your deliverable, or accept a project milestone directly on your page.
-          </p>
+<div><div class="w-12 h-12 rounded-full bg-[#00D37F] text-[#010E09] font-extrabold text-[18px] flex items-center justify-center mb-5">2</div><div class="text-[12px] font-bold text-[#00D37F] uppercase tracking-wider mb-1">Pages</div><h3 class="text-[20px] font-bold text-[#F7FAF0] mb-3">Booked</h3><p class="body-text text-[#D2D8C7]">They book a session, purchase your deliverable, or accept a project milestone directly on your page.</p></div>
+<div class="mt-6 pt-4 border-t border-[#2A3440] text-[13px] text-[#7D8578]">Direct checkout</div>
 </div>
-<div class="mt-6 pt-4 border-t border-[#2A3440] text-[13px] text-[#7D8578]">
-          Direct checkout
-        </div>
-</div>
-<!-- Stop 3: Paid -->
 <div class="bg-[#101820] rounded-[24px] border border-[#2A3440] p-6 lg:p-7 flex flex-col justify-between shadow-[4px_4px_0px_#010E09] hover:border-[#F84F94] transition-colors">
-<div>
-<div class="w-12 h-12 rounded-full bg-[#F84F94] text-[#010E09] font-extrabold text-[18px] flex items-center justify-center mb-5">
-            3
-          </div>
-<div class="text-[12px] font-bold text-[#F84F94] uppercase tracking-wider mb-1">PrymAgent</div>
-<h3 class="text-[20px] font-bold text-[#F7FAF0] mb-3">Paid</h3>
-<p class="body-text text-[#D2D8C7]">
-            The invoice goes out, the payment is collected, and the receipt is sent the instant funds land.
-          </p>
+<div><div class="w-12 h-12 rounded-full bg-[#F84F94] text-[#010E09] font-extrabold text-[18px] flex items-center justify-center mb-5">3</div><div class="text-[12px] font-bold text-[#F84F94] uppercase tracking-wider mb-1">PrymAgent</div><h3 class="text-[20px] font-bold text-[#F7FAF0] mb-3">Paid</h3><p class="body-text text-[#D2D8C7]">The invoice goes out, the payment is collected, and the receipt is sent the instant funds land.</p></div>
+<div class="mt-6 pt-4 border-t border-[#2A3440] text-[13px] text-[#7D8578]">Automated settlement</div>
 </div>
-<div class="mt-6 pt-4 border-t border-[#2A3440] text-[13px] text-[#7D8578]">
-          Automated settlement
-        </div>
-</div>
-<!-- Stop 4: Proven -->
 <div class="bg-[#101820] rounded-[24px] border border-[#2A3440] p-6 lg:p-7 flex flex-col justify-between shadow-[4px_4px_0px_#010E09] hover:border-[#48D7FF] transition-colors">
-<div>
-<div class="w-12 h-12 rounded-full bg-[#48D7FF] text-[#010E09] font-extrabold text-[18px] flex items-center justify-center mb-5">
-            4
-          </div>
-<div class="text-[12px] font-bold text-[#48D7FF] uppercase tracking-wider mb-1">The Record</div>
-<h3 class="text-[20px] font-bold text-[#F7FAF0] mb-3">Proven</h3>
-<p class="body-text text-[#D2D8C7]">
-            Each paid job adds to your verified history, so the next client finds you more easily.
-          </p>
-</div>
-<div class="mt-6 pt-4 border-t border-[#2A3440] text-[13px] text-[#7D8578]">
-          Automatic reputation
-        </div>
+<div><div class="w-12 h-12 rounded-full bg-[#48D7FF] text-[#010E09] font-extrabold text-[18px] flex items-center justify-center mb-5">4</div><div class="text-[12px] font-bold text-[#48D7FF] uppercase tracking-wider mb-1">The Record</div><h3 class="text-[20px] font-bold text-[#F7FAF0] mb-3">Proven</h3><p class="body-text text-[#D2D8C7]">Each paid job adds to your verified history, so the next client discovers you more easily.</p></div>
+<div class="mt-6 pt-4 border-t border-[#2A3440] text-[13px] text-[#7D8578]">Automatic reputation</div>
 </div>
 </div>
-<!-- Connecting Banner -->
 <div class="p-6 rounded-[24px] bg-[#101820] border border-[#2A3440] flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full bg-[#B0D226] text-[#010E09] flex items-center justify-center font-bold">
-          ↻
-        </div>
-<span class="text-[16px] sm:text-[17px] font-semibold text-[#F7FAF0]">
-          One login, one record, one client history across all three.
-        </span>
-</div>
-<a class="btn-pill h-[46px] px-6 bg-[#B0D226] text-[#010E09] text-[14px] font-bold" href="https://wa.me/" rel="noopener noreferrer" target="_blank">
-        Join on WhatsApp
-      </a>
+<div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-[#B0D226] text-[#010E09] flex items-center justify-center font-bold">↻</div><span class="text-[16px] sm:text-[17px] font-semibold text-[#F7FAF0]">One login, one record, one client history across all three.</span></div>
+<a class="btn-pill h-[46px] px-6 bg-[#B0D226] text-[#010E09] text-[14px] font-bold" href="https://wa.me/" rel="noopener noreferrer" target="_blank">Join on WhatsApp</a>
 </div>
 </div>
-</section>
-<!-- 7. WHO IT IS FOR -->
+</section><!-- 7. WHO IT IS FOR -->
 <section class="w-full bg-[#F7FAF0] text-[#010E09] py-20 lg:py-24 px-6 lg:px-12 border-b border-[#D2D8C7]" id="audience">
 <div class="max-w-[1440px] mx-auto">
 <h2 class="section-headline text-[#010E09] mb-10 max-w-[20ch]">
@@ -1192,7 +1114,7 @@
 <span class="text-[14px] font-semibold text-[#010E09]">Pages &amp; Prymsearch</span>
 </div>
 <h3 class="card-title text-[24px] mb-4">
-            I want my own site, and to be found.
+            I want my own site, and to be discovered.
           </h3>
 <p class="body-text text-[#010E09] mb-8">
             Build your professional site, take bookings and payments, and join the pool that Prymsearch draws from. Pre-register now, and you're ready on day one.
