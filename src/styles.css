@@ -44,6 +44,37 @@ a:focus-visible {
   letter-spacing: -0.055em;
 }
 
+.hero-benefits {
+  display: grid;
+  gap: 0.55rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+  color: #f7faf0;
+}
+
+.hero-benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.benefit-mark {
+  width: 0.62rem;
+  height: 0.62rem;
+  flex: 0 0 auto;
+  margin-top: 0.42rem;
+  border-radius: 2px;
+  box-shadow: 2px 2px 0 #010e09;
+}
+
+.benefit-mark-coral { background: #f84f94; }
+.benefit-mark-green { background: #00d37f; }
+.benefit-mark-lime { background: #b0d226; }
+
 .hero-copy .subhead-text {
   max-width: 38ch;
   font-size: clamp(1rem, 1.5vw, 1.25rem);
