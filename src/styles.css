@@ -1,0 +1,265 @@
+/* Responsive refinements for the existing Prym brand system. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-padding-top: 6rem;
+}
+
+body {
+  width: 100%;
+  min-width: 320px;
+  overflow-x: clip;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-pill:focus-visible,
+.faq-trigger:focus-visible,
+a:focus-visible {
+  outline: 3px solid #48d7ff;
+  outline-offset: 4px;
+}
+
+.hero-section {
+  min-height: 0;
+  padding-top: clamp(7.5rem, 12vw, 9rem);
+  padding-bottom: clamp(3.5rem, 7vw, 5rem);
+}
+
+.hero-headline {
+  font-size: clamp(3rem, 6.1vw, 5.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+}
+
+.hero-copy .subhead-text {
+  max-width: 38ch;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  line-height: 1.55;
+}
+
+.hero-visual {
+  width: 100%;
+  min-width: 0;
+}
+
+.hero-visual > div:has(> img) {
+  width: min(100%, 430px);
+}
+
+.hero-visual img {
+  display: block;
+  max-width: 100%;
+}
+
+.section-headline {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+
+.closing-headline {
+  font-size: clamp(2.35rem, 5vw, 3.75rem);
+}
+
+.body-text {
+  max-width: 62ch;
+}
+
+.faq-trigger {
+  min-height: 4rem;
+}
+
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 4.5rem;
+  }
+
+  body > aside {
+    min-height: 40px;
+    height: auto;
+    padding-block: 0.5rem;
+    gap: 0.25rem 0.5rem;
+    flex-wrap: wrap;
+    line-height: 1.35;
+  }
+
+  .floating-nav {
+    height: 58px !important;
+    padding-inline: 0.9rem;
+  }
+
+  .floating-nav .btn-pill {
+    height: 40px;
+    padding-inline: 0.9rem;
+    font-size: 0.75rem;
+  }
+
+  .hero-section {
+    padding-top: 7.75rem;
+    padding-bottom: 3.25rem;
+  }
+
+  .hero-section > .max-w-\[1440px\] {
+    gap: 2.5rem;
+  }
+
+  .hero-headline {
+    font-size: clamp(2.7rem, 12vw, 4.25rem);
+    line-height: 0.98;
+  }
+
+  .hero-copy .subhead-text {
+    max-width: 34ch;
+    margin-top: 1rem;
+    font-size: 1rem;
+  }
+
+  .hero-copy > div.mt-8 {
+    align-items: stretch;
+    gap: 0.8rem;
+    margin-top: 1.35rem;
+  }
+
+  .hero-copy > div.mt-8 .btn-pill {
+    min-height: 3.25rem;
+    padding-inline: 1.35rem;
+  }
+
+  .hero-copy > div.mt-8 > a:last-child {
+    font-size: 0.875rem;
+  }
+
+  .hero-visual {
+    min-height: 440px !important;
+    margin-inline: auto;
+    max-width: 430px;
+  }
+
+  .hero-visual > div:has(> img) {
+    width: 76%;
+    max-width: 340px;
+    border-radius: 24px;
+  }
+
+  .hero-visual img {
+    height: 400px !important;
+  }
+
+  .hero-visual .hero-card-1,
+  .hero-visual .hero-card-2,
+  .hero-visual .hero-card-3,
+  .hero-visual .hero-card-4,
+  .hero-visual .hero-card-5 {
+    max-width: min(68%, 250px);
+    padding: 0.7rem;
+    font-size: 0.7rem;
+    line-height: 1.35;
+  }
+
+  .hero-visual .hero-card-1 { left: 0; top: 0; }
+  .hero-visual .hero-card-2 { right: 0; top: 5rem; }
+  .hero-visual .hero-card-3 { left: 0; bottom: 6.5rem; }
+  .hero-visual .hero-card-4 { right: 0; bottom: 3.25rem; }
+  .hero-visual .hero-card-5 { right: 0; bottom: -0.75rem; }
+
+  .hero-visual .hero-card-2 > div:last-child > div:last-child {
+    font-size: 0.9rem;
+  }
+
+  .tab-panel .max-w-\[1440px\],
+  section > .max-w-\[1440px\] {
+    min-width: 0;
+  }
+
+  #walkthrough-sticky-bar {
+    top: 66px;
+    padding-inline: 1rem;
+    overflow-x: auto;
+  }
+
+  #walkthrough-sticky-bar > div {
+    min-width: max-content;
+  }
+
+  .tab-panel [class*="grid-cols-"] {
+    min-width: 0;
+  }
+
+  footer {
+    padding-bottom: 5rem !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-section {
+    padding-inline: 1rem;
+  }
+
+  .hero-headline {
+    font-size: clamp(2.45rem, 11.4vw, 2.85rem);
+  }
+
+  .hero-visual {
+    min-height: 390px !important;
+  }
+
+  .hero-visual > div:has(> img) {
+    width: 72%;
+  }
+
+  .hero-visual img {
+    height: 360px !important;
+  }
+
+  .hero-visual .hero-card-1,
+  .hero-visual .hero-card-2,
+  .hero-visual .hero-card-3,
+  .hero-visual .hero-card-4,
+  .hero-visual .hero-card-5 {
+    max-width: 65%;
+    padding: 0.55rem;
+    font-size: 0.64rem;
+  }
+
+  .hero-visual .hero-card-1 { left: -0.2rem; }
+  .hero-visual .hero-card-2 { right: -0.2rem; }
+  .hero-visual .hero-card-3 { left: -0.2rem; }
+  .hero-visual .hero-card-4,
+  .hero-visual .hero-card-5 { right: -0.2rem; }
+
+  .hero-visual .hero-card-5 {
+    max-width: 72%;
+  }
+
+  .hero-visual .hero-card-5 p {
+    font-size: 0.65rem;
+  }
+
+  .faq-trigger > span:first-child {
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,1408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Prymsuite | Prime tools for modern work</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
+
+    :root {
+      --agent-ink: #101820;
+      --ledger-navy: #161D25;
+      --prym-black: #010E09;
+      --paper: #F7FAF0;
+      --warm-gray: #E6EBDD;
+      --mid-gray: #D2D8C7;
+      --stone-gray: #7D8578;
+      --agent-lime: #B0D226;
+      --solo-coral: #F84F94;
+      --dynamic-green: #00D37F;
+      --flow-cyan: #48D7FF;
+      --approval-amber: #FFB85C;
+      --coral-tint: #FDF0F5;
+      --green-tint: #EBFBF3;
+      --lime-tint: #F4F8DE;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--paper);
+      color: var(--prym-black);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Type scale specifications */
+    .hero-headline {
+      font-weight: 900;
+      font-size: 88px;
+      line-height: 0.96;
+      letter-spacing: -0.03em;
+    }
+
+    .section-headline {
+      font-weight: 700;
+      font-size: 48px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .closing-headline {
+      font-weight: 700;
+      font-size: 60px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .subhead-text {
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 1.4;
+    }
+
+    .body-text {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 60ch;
+    }
+
+    .card-title {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 1.25;
+    }
+
+    .ui-label {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .caption-text {
+      font-weight: 400;
+      font-size: 13px;
+    }
+
+    @media (max-width: 1023px) {
+      .hero-headline { font-size: 68px; line-height: 0.98; }
+      .section-headline { font-size: 38px; }
+      .closing-headline { font-size: 48px; }
+      .subhead-text { font-size: 18px; }
+    }
+
+    @media (max-width: 639px) {
+      .hero-headline { font-size: 46px; line-height: 1.0; }
+      .section-headline { font-size: 32px; }
+      .closing-headline { font-size: 38px; }
+      .subhead-text { font-size: 17px; }
+    }
+
+    /* Chunky cards with 1px border and 4px offset shadow */
+    .card-hard-shadow {
+      border-radius: 24px;
+      border: 1px solid var(--prym-black);
+      box-shadow: 4px 4px 0px var(--prym-black);
+    }
+
+    .card-hard-shadow-lime {
+      border-radius: 24px;
+      border: 1px solid var(--prym-black);
+      box-shadow: 4px 4px 0px var(--agent-lime);
+    }
+
+    /* Pill buttons with offset shadow on hover */
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      font-weight: 600;
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 4px 4px 0px var(--prym-black);
+    }
+
+    /* Floating navigation bar */
+    .floating-nav {
+      transition: height 0.2s ease, padding 0.2s ease, box-shadow 0.2s ease;
+    }
+    .floating-nav.nav-scrolled {
+      height: 56px !important;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Hero wave animation */
+    @keyframes waveDrift {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      50% {
+        transform: translate3d(-30px, 12px, 0);
+      }
+      100% {
+        transform: translate3d(0, 0, 0);
+      }
+    }
+    .hero-wave-animated {
+      animation: waveDrift 30s ease-in-out infinite alternate;
+    }
+
+    /* Route lines between hero cards */
+    @keyframes drawRouteLine {
+      from {
+        stroke-dashoffset: 600;
+      }
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+    .hero-route-line {
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      animation: drawRouteLine 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) 0.5s forwards;
+    }
+
+    /* Staggered floating cards in hero */
+    @keyframes cardFadeSlide {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .hero-card-1 { animation: cardFadeSlide 0.55s ease 0.3s both; }
+    .hero-card-2 { animation: cardFadeSlide 0.55s ease 0.45s both; }
+    .hero-card-3 { animation: cardFadeSlide 0.55s ease 0.6s both; }
+    .hero-card-4 { animation: cardFadeSlide 0.55s ease 0.75s both; }
+    .hero-card-5 { animation: cardFadeSlide 0.55s ease 0.9s both; }
+
+    /* Nav link hover effects with dot scaling */
+    .nav-pill-link .nav-dot {
+      transition: transform 0.16s ease;
+    }
+    .nav-pill-link:hover .nav-dot {
+      transform: scale(1.4);
+    }
+
+    /* FAQ accordion */
+    .faq-answer {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.24s ease;
+    }
+    .faq-item[data-open="true"] .faq-answer {
+      grid-template-rows: 1fr;
+    }
+    .faq-answer-inner {
+      overflow: hidden;
+    }
+    .faq-plus {
+      transition: transform 0.2s ease;
+    }
+    .faq-item[data-open="true"] .faq-plus {
+      transform: rotate(45deg);
+    }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/src/styles.css"/>
+</head>
+<body class="selection:bg-[#010E09] selection:text-[#B0D226]">
+<svg aria-hidden="true" class="inline-defs-container" style="position:absolute;width:0;height:0;overflow:hidden"></svg>
+<!-- 1. ANNOUNCEMENT BAR -->
+<aside class="w-full h-[40px] bg-[#010E09] text-[#F7FAF0] px-4 lg:px-12 flex items-center justify-center text-center text-[13px] sm:text-[14px] font-medium gap-3 z-50 relative">
+<span class="truncate">PrymAgent is live on WhatsApp. Pages and Prymsearch are coming soon.</span>
+<a class="text-[#B0D226] font-semibold whitespace-nowrap hover:underline" href="#see-in-action" onclick="switchWorkTab('prymsearch')">
+    Pre-register for Prymsearch →
+  </a>
+</aside>
+<!-- 2. NAVIGATION: RESTRAINED FLOATING PILL BAR -->
+<div class="sticky top-4 z-40 px-4 sm:px-6 pointer-events-none mb-[-80px]">
+<header class="floating-nav max-w-6xl mx-auto h-[64px] bg-[#F7FAF0] border border-[#D2D8C7] rounded-full px-5 sm:px-7 flex items-center justify-between pointer-events-auto shadow-sm" id="main-nav-bar">
+<!-- Brand Lockup -->
+<a class="flex items-center gap-2.5 text-decoration-none group flex-shrink-0" href="#">
+<div class="w-7 h-7 bg-[#010E09] flex items-center justify-center rounded-sm transition-transform group-hover:scale-95">
+<div class="w-2.5 h-2.5 bg-[#B0D226]"></div>
+</div>
+<span class="font-black text-[22px] tracking-tight text-[#010E09] lowercase">prym</span>
+</a>
+<!-- Center Links with color dots and hover color underlines -->
+<nav class="hidden md:flex items-center gap-7 text-[14px] font-semibold text-[#010E09]">
+<a class="nav-pill-link inline-flex items-center gap-2 hover:underline decoration-[#F84F94] decoration-2 underline-offset-4 transition-colors" href="#the-suite">
+<span class="nav-dot w-[6px] h-[6px] rounded-full bg-[#F84F94] inline-block"></span>
+<span>PrymAgent</span>
+</a>
+<a class="nav-pill-link inline-flex items-center gap-2 hover:underline decoration-[#00D37F] decoration-2 underline-offset-4 transition-colors" href="#see-in-action" onclick="switchWorkTab('pages')">
+<span class="nav-dot w-[6px] h-[6px] rounded-full bg-[#00D37F] inline-block"></span>
+<span>Pages</span>
+</a>
+<a class="nav-pill-link inline-flex items-center gap-2 hover:underline decoration-[#B0D226] decoration-2 underline-offset-4 transition-colors" href="#see-in-action" onclick="switchWorkTab('prymsearch')">
+<span class="nav-dot w-[6px] h-[6px] rounded-full bg-[#B0D226] inline-block"></span>
+<span>Prymsearch</span>
+</a>
+<a class="nav-pill-link inline-flex items-center gap-2 hover:underline decoration-[#010E09] decoration-2 underline-offset-4 transition-colors" href="#questions">
+<span class="nav-dot w-[6px] h-[6px] rounded-full bg-[#010E09] inline-block"></span>
+<span>Pricing</span>
+</a>
+</nav>
+<!-- Right Side CTA: Prym Black pill with 4px Agent Lime hard offset shadow -->
+<a class="btn-pill h-[44px] px-5 sm:px-6 bg-[#010E09] text-[#F7FAF0] text-[13px] sm:text-[14px] font-semibold whitespace-nowrap shadow-[4px_4px_0px_#B0D226]" href="https://wa.me/" rel="noopener noreferrer" target="_blank">
+      Start on WhatsApp
+    </a>
+</header>
+</div>
+<!-- 3. HERO: DARKER AND MORE ALIVE (Agent Ink #101820) -->
+<section class="hero-section w-full min-h-[90vh] bg-[#101820] text-[#F7FAF0] pt-28 pb-16 lg:pt-32 lg:pb-20 px-6 lg:px-12 relative overflow-hidden flex items-center">
+<!-- SVG Layer: Agent Lime wave lines and dot grid (~18% opacity) with 30s CSS drifting wave animation -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.18]">
+<svg class="hero-wave-animated w-[140%] h-[140%] -top-[20%] -left-[20%] absolute" fill="none" preserveaspectratio="none" viewbox="0 0 1600 1000">
+<defs>
+<pattern height="36" id="hero-lime-dots" patternunits="userSpaceOnUse" width="36" x="0" y="0">
+<circle cx="2" cy="2" fill="#B0D226" r="1.5"></circle>
+</pattern>
+</defs>
+<rect fill="url(#hero-lime-dots)" height="1000" width="1600"></rect>
+<!-- Crisp wave lines without blur or gradients -->
+<path d="M-80,450 C360,260 760,680 1680,280" stroke="#B0D226" stroke-width="2.5"></path>
+<path d="M-80,560 C420,380 820,760 1680,390" stroke="#B0D226" stroke-width="2"></path>
+<path d="M-80,680 C320,490 890,830 1680,500" stroke="#B0D226" stroke-width="1.5"></path>
+</svg>
+</div>
+<div class="max-w-[1440px] w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
+<!-- Left Column (~55% -> 7 cols) -->
+<div class="hero-copy lg:col-span-7 flex flex-col items-start pr-0 lg:pr-4">
+<h1 class="hero-headline">
+<span class="block text-[#F84F94]">Get paid.</span>
+<span class="block text-[#B0D226]">Get found.</span>
+<span class="block text-[#00D37F]">Get trusted.</span>
+</h1>
+<p class="subhead-text text-[#F7FAF0] mt-6 max-w-[48ch]">
+        Invoice clients, get paid, and build a reputation—all in one place.
+      </p>
+<div class="mt-8 flex flex-wrap items-center gap-5 sm:gap-7">
+<a class="btn-pill h-[56px] px-8 bg-[#B0D226] text-[#010E09] text-[16px] font-bold shadow-[4px_4px_0px_#010E09] hover:bg-[#c2e431]" href="https://wa.me/" rel="noopener noreferrer" target="_blank">
+          Start on WhatsApp
+        </a>
+<a class="text-[16px] font-semibold text-[#F7FAF0] hover:text-[#B0D226] hover:underline flex items-center gap-1.5 transition-colors" href="#see-in-action">
+          See how the three fit together ↓
+        </a>
+</div>
+<p class="caption-text text-[#D2D8C7] mt-6">
+        PrymAgent is live on WhatsApp. Pages and Prymsearch are coming soon.
+      </p>
+</div>
+<!-- Right Column (~45% -> 5 cols): Professional cutout photograph with 5 floating cards & Flow Cyan route lines -->
+<div class="hero-visual lg:col-span-5 relative flex items-center justify-center min-h-[540px] lg:min-h-[620px]">
+<!-- SVG Connecting Flow Cyan Route Lines -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-10" fill="none" viewbox="0 0 500 620">
+<!-- Route Line 1: Card 1 to Card 2 -->
+<path class="hero-route-line" d="M 120 40 C 240 60, 310 120, 340 180" stroke="#48D7FF" stroke-linecap="round" stroke-width="2"></path>
+<!-- Route Line 2: Card 2 to Card 4 -->
+<path class="hero-route-line" d="M 330 240 C 290 280, 240 330, 210 390" stroke="#48D7FF" stroke-linecap="round" stroke-width="2"></path>
+<!-- Route Line 3: Card 3 to Card 5 -->
+<path class="hero-route-line" d="M 160 380 C 180 430, 240 480, 280 520" stroke="#48D7FF" stroke-dasharray="4 4" stroke-width="2"></path>
+</svg>
+<!-- Center Cutout Photo Container -->
+<div class="relative w-full max-w-[390px] lg:max-w-[430px] rounded-[32px] overflow-hidden bg-[#161D25] border border-[#2A3440] shadow-2xl flex items-end justify-center">
+<img alt="Consultant checking her phone" class="w-full h-[520px] lg:h-[560px] object-cover object-top" src="/hero-portrait.png"/>
+</div>
+<!-- Card 1: Invoice INV-208 (Top Left) -->
+<div class="hero-card-1 absolute -top-3 -left-3 sm:-left-6 bg-[#FFFFFF] card-hard-shadow p-3.5 sm:p-4 text-[13px] sm:text-[14px] font-semibold text-[#010E09] flex items-center gap-3 z-20 max-w-[270px]">
+<span class="w-3 h-3 rounded-full bg-[#F84F94] flex-shrink-0"></span>
+<span>Invoice INV-208 sent to Ada Ventures</span>
+</div>
+<!-- Card 2: Payment Received (Top Right) -->
+<div class="hero-card-2 absolute top-28 -right-3 sm:-right-6 bg-[#FFFFFF] card-hard-shadow p-3.5 sm:p-4 text-[13px] sm:text-[14px] font-bold text-[#010E09] flex items-center gap-3 z-20">
+<div class="w-6 h-6 rounded-full bg-[#00D37F] text-[#010E09] flex items-center justify-center text-[12px] flex-shrink-0 font-extrabold">
+          ✓
+        </div>
+<div>
+<div class="text-[11px] text-[#7D8578] font-normal leading-tight">Payment received</div>
+<div class="text-[15px]">₦450,000</div>
+</div>
+</div>
+<!-- Card 3: Receipt sent (Lower Left) -->
+<div class="hero-card-3 absolute bottom-36 -left-3 sm:-left-6 bg-[#FFFFFF] card-hard-shadow p-3.5 sm:p-4 text-[13px] sm:text-[14px] font-semibold text-[#010E09] flex items-center gap-3 z-20 max-w-[280px]">
+<span class="w-3 h-3 rounded-full bg-[#00D37F] flex-shrink-0"></span>
+<span>Receipt sent automatically to Ada Ventures</span>
+</div>
+<!-- Card 4: Fifth Card - Site is Live (Ledger Navy, Lower Center/Left) -->
+<div class="hero-card-4 absolute bottom-16 -right-2 sm:right-4 bg-[#161D25] text-[#F7FAF0] rounded-[20px] border border-[#2A3440] p-3 sm:p-3.5 text-[12px] sm:text-[13px] font-semibold flex items-center gap-2.5 z-20 shadow-[4px_4px_0px_#010E09]">
+<span class="w-2.5 h-2.5 rounded-full bg-[#00D37F] flex-shrink-0"></span>
+<span>Your site is live: <span class="text-[#48D7FF]">prym.me/amara</span></span>
+</div>
+<!-- Card 5: Dashed-outline Preview Card (Bottom Center/Right) -->
+<div class="hero-card-5 absolute -bottom-5 -right-2 sm:-right-4 bg-[#161D25] text-[#F7FAF0] rounded-[20px] border-2 border-dashed border-[#B0D226] p-3.5 sm:p-4 text-[12px] sm:text-[13px] z-30 max-w-[300px] shadow-[4px_4px_0px_#010E09]">
+<div class="flex items-center justify-between mb-1.5">
+<span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-[#B0D226] text-[#010E09]">Preview</span>
+<span class="text-[11px] text-[#D2D8C7]">Prymsearch</span>
+</div>
+<p class="text-[#F7FAF0] font-medium leading-snug">
+          Coming with Prymsearch: "Hey, you have been found by a potential client."
+        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. THE SUITE (3 Tiles) -->
+<section class="w-full bg-[#F7FAF0] text-[#010E09] py-20 lg:py-24 px-6 lg:px-12 border-b border-[#D2D8C7]" id="the-suite">
+<div class="max-w-[1440px] mx-auto">
+<h2 class="section-headline text-[#010E09] mb-12 max-w-[20ch]">
+      Three tools. One place for your business.
+    </h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+<!-- Tile 1: PrymAgent (Solo Coral tint #FDF0F5) -->
+<div class="bg-[#FDF0F5] rounded-[24px] border border-[#010E09] p-7 lg:p-8 flex flex-col justify-between hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_#010E09]">
+<div>
+<div class="flex items-center justify-between mb-6">
+<span class="px-3 py-1 rounded-full bg-[#010E09] text-[#F7FAF0] text-[12px] font-bold">
+              Live now
+            </span>
+<span class="text-[14px] font-semibold text-[#010E09]">PrymAgent</span>
+</div>
+<h3 class="card-title text-[#010E09] text-[24px] mb-3">
+            Bill clients from WhatsApp.
+          </h3>
+<p class="body-text text-[#010E09] mb-8">
+            Send quotes and invoices in a message. Bank details and payment links go on every invoice. Reminders go to clients in your name. Receipts go out the moment they pay.
+          </p>
+</div>
+<div>
+<a class="btn-pill h-[50px] px-6 bg-[#010E09] text-[#F7FAF0] text-[14px] font-semibold w-full" href="https://wa.me/" rel="noopener noreferrer" target="_blank">
+            Start on WhatsApp
+          </a>
+</div>
+</div>
+<!-- Tile 2: Pages (Dynamic Green tint #EBFBF3) -->
+<div class="bg-[#EBFBF3] rounded-[24px] border border-[#010E09] p-7 lg:p-8 flex flex-col justify-between hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_#010E09]">
+<div>
+<div class="flex items-center justify-between mb-6">
+<span class="px-3 py-1 rounded-full bg-[#101820] text-[#00D37F] text-[12px] font-bold border border-[#00D37F]/40">
+              Coming soon
+            </span>
+<span class="text-[14px] font-semibold text-[#010E09]">Pages</span>
+</div>
+<h3 class="card-title text-[#010E09] text-[24px] mb-3">
+            A page that takes payment.
+          </h3>
+<p class="body-text text-[#010E09] mb-8">
+            Your public page takes consultation bookings, sells digital products, and collects milestone payments, so clients can hire and pay you in one place. Each page shows your verified credentials.
+          </p>
+</div>
+<div>
+<a class="btn-pill h-[50px] px-6 bg-[#FFFFFF] border border-[#010E09] text-[#010E09] text-[14px] font-semibold w-full hover:bg-[#010E09] hover:text-[#F7FAF0]" href="#see-in-action" onclick="switchWorkTab('pages')">
+            Get notified when Pages launches
+          </a>
+</div>
+</div>
+<!-- Tile 3: Prymsearch (Agent Lime tint #F4F8DE) -->
+<div class="bg-[#F4F8DE] rounded-[24px] border border-[#010E09] p-7 lg:p-8 flex flex-col justify-between hover:translate-y-[-2px] transition-transform shadow-[4px_4px_0px_#010E09]">
+<div>
+<div class="flex items-center justify-between mb-6">
+<span class="px-3 py-1 rounded-full bg-[#010E09] text-[#B0D226] text-[12px] font-bold">
+              Coming soon
+            </span>
+<span class="text-[14px] font-semibold text-[#010E09]">Prymsearch</span>
+</div>
+<h3 class="card-title text-[#010E09] text-[24px] mb-3">
+            Get found by people who need you.
+          </h3>
+<p class="body-text text-[#010E09] mb-8">
+            Clients describe what they need in plain English. Prymsearch matches verified professionals and consultants, and shows the reason for each match.
+          </p>
+</div>
+<div>
+<a class="btn-pill h-[50px] px-6 bg-[#010E09] text-[#F7FAF0] text-[14px] font-semibold w-full" href="#see-in-action" onclick="switchWorkTab('prymsearch')">
+            Pre-register to be listed
+          </a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. HOW IT WORKS: WALKTHROUGH WITH STICKY TABS (UNIFIED WARM GRAY #E6EBDD BACKGROUND) -->
+<section class="w-full bg-[#E6EBDD] text-[#010E09] border-b border-[#010E09]" id="see-in-action">
+<!-- Walkthrough Header -->
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 pt-20 pb-8 bg-[#E6EBDD]">
+<span class="ui-label uppercase tracking-wider block mb-2 font-bold opacity-80" id="walkthrough-kicker">Interactive walkthrough</span>
+<h2 class="section-headline" id="walkthrough-main-title">
+      See it in action.
+    </h2>
+</div>
+<!-- Sticky Tab Bar: Background locked to Warm Gray #E6EBDD -->
+<div class="sticky top-[88px] z-30 bg-[#E6EBDD] border-b border-black/10 py-3 px-6 lg:px-12" id="walkthrough-sticky-bar">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between">
+<div class="flex items-center gap-2 p-1.5 rounded-full bg-black/10 backdrop-blur-sm border border-black/15">
+<button class="px-5 sm:px-6 py-2 rounded-full text-[14px] font-bold transition-all text-[#010E09] hover:bg-black/10" id="tab-btn-prymagent" onclick="switchWorkTab('prymagent')">
+          PrymAgent
+        </button>
+<button class="px-5 sm:px-6 py-2 rounded-full text-[14px] font-bold transition-all bg-[#010E09] text-[#F7FAF0] shadow-sm" id="tab-btn-pages" onclick="switchWorkTab('pages')">
+          Pages
+        </button>
+<button class="px-5 sm:px-6 py-2 rounded-full text-[14px] font-bold transition-all text-[#010E09] hover:bg-black/10" id="tab-btn-prymsearch" onclick="switchWorkTab('prymsearch')">
+          Prymsearch
+        </button>
+</div>
+<div class="hidden sm:block text-[13px] font-semibold opacity-75" id="walkthrough-active-indicator">Tab: Pages professional site</div>
+</div>
+</div>
+<!-- Content Container -->
+<div class="py-12 lg:py-16 bg-[#E6EBDD]">
+<!-- ================= TAB 1: PRYMAGENT ================= -->
+<div class="tab-panel transition-opacity duration-300 hidden bg-[#E6EBDD]" id="tab-panel-prymagent">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<!-- Part 1: How it works (5 Steps + Dashboard) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center mb-16">
+<!-- Left Column (5 Steps) -->
+<div class="lg:col-span-5 relative py-2">
+<div class="relative pl-14 space-y-7">
+<!-- Vertical Flow Cyan Line -->
+<div class="absolute left-[19px] top-4 bottom-4 w-[4px] bg-[#48D7FF] rounded-full"></div>
+<!-- Step 1 -->
+<div class="relative">
+<div class="absolute -left-14 top-0 w-10 h-10 rounded-full bg-[#F84F94] border-2 border-[#010E09] text-[#010E09] font-extrabold text-[15px] flex items-center justify-center shadow-[2px_2px_0px_#010E09]">1</div>
+<p class="text-[17px] font-semibold text-[#010E09] leading-snug pt-1">
+                  Message PrymAgent. Type the invoice the way you would tell a colleague.
+                </p>
+</div>
+<!-- Step 2 -->
+<div class="relative">
+<div class="absolute -left-14 top-0 w-10 h-10 rounded-full bg-[#F84F94] border-2 border-[#010E09] text-[#010E09] font-extrabold text-[15px] flex items-center justify-center shadow-[2px_2px_0px_#010E09]">2</div>
+<p class="text-[17px] font-semibold text-[#010E09] leading-snug pt-1">
+                  Check the draft. PrymAgent asks only for anything missing.
+                </p>
+</div>
+<!-- Step 3 -->
+<div class="relative">
+<div class="absolute -left-14 top-0 w-10 h-10 rounded-full bg-[#F84F94] border-2 border-[#010E09] text-[#010E09] font-extrabold text-[15px] flex items-center justify-center shadow-[2px_2px_0px_#010E09]">3</div>
+<p class="text-[17px] font-semibold text-[#010E09] leading-snug pt-1">
+                  Send it. By WhatsApp, email, or a payment link.
+                </p>
+</div>
+<!-- Step 4 -->
+<div class="relative">
+<div class="absolute -left-14 top-0 w-10 h-10 rounded-full bg-[#F84F94] border-2 border-[#010E09] text-[#010E09] font-extrabold text-[15px] flex items-center justify-center shadow-[2px_2px_0px_#010E09]">4</div>
+<p class="text-[17px] font-semibold text-[#010E09] leading-snug pt-1">
+                  Reminders go out for you, in your name, by email.
+                </p>
+</div>
+<!-- Step 5 -->
+<div class="relative">
+<div class="absolute -left-14 top-0 w-10 h-10 rounded-full bg-[#F84F94] border-2 border-[#010E09] text-[#010E09] font-extrabold text-[15px] flex items-center justify-center shadow-[2px_2px_0px_#010E09]">5</div>
+<p class="text-[17px] font-semibold text-[#010E09] leading-snug pt-1">
+                  The receipt goes to your client the moment it's paid.
+                </p>
+</div>
+</div>
+</div>
+<!-- Right Column: Laptop frame showing PrymAgent dashboard -->
+<div class="lg:col-span-7">
+<div class="bg-[#101820] rounded-[24px] border-2 border-[#010E09] p-4 sm:p-6 shadow-[4px_4px_0px_#010E09]">
+<!-- Laptop Top Bar -->
+<div class="flex items-center justify-between pb-4 mb-5 border-b border-[#2A3440]">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-[#F84F94]"></span>
+<span class="w-3 h-3 rounded-full bg-[#FFB85C]"></span>
+<span class="w-3 h-3 rounded-full bg-[#00D37F]"></span>
+<span class="ml-3 text-[12px] font-semibold text-[#D2D8C7]">PrymAgent Dashboard</span>
+</div>
+<span class="text-[11px] font-medium text-[#7D8578]">Sample data</span>
+</div>
+<!-- 4 Stat Tiles -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+<div class="bg-[#161D25] border border-[#2A3440] rounded-2xl p-3.5">
+<div class="text-[11px] text-[#7D8578] font-medium mb-1">Paid this month</div>
+<div class="text-[18px] font-extrabold text-[#00D37F]">₦850k</div>
+</div>
+<div class="bg-[#161D25] border border-[#2A3440] rounded-2xl p-3.5">
+<div class="text-[11px] text-[#7D8578] font-medium mb-1">Outstanding</div>
+<div class="text-[18px] font-extrabold text-[#FFB85C]">₦250k</div>
+</div>
+<div class="bg-[#161D25] border border-[#2A3440] rounded-2xl p-3.5">
+<div class="text-[11px] text-[#7D8578] font-medium mb-1">Receipts</div>
+<div class="text-[18px] font-extrabold text-[#F7FAF0]">18</div>
+</div>
+<div class="bg-[#161D25] border border-[#2A3440] rounded-2xl p-3.5">
+<div class="text-[11px] text-[#7D8578] font-medium mb-1">Credits</div>
+<div class="text-[18px] font-extrabold text-[#B0D226]">107</div>
+</div>
+</div>
+<!-- Recent documents + Client snapshot -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+<div class="md:col-span-7 bg-[#F7FAF0] text-[#010E09] rounded-2xl p-4 border border-[#010E09]">
+<div class="text-[13px] font-bold mb-3">Recent documents</div>
+<div class="space-y-2.5 text-[13px]">
+<div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-[#FFFFFF] border border-[#D2D8C7]">
+<span class="font-medium truncate">Invoice INV-208, Ada Ventures</span>
+<span class="px-2.5 py-0.5 rounded-full bg-[#00D37F] text-[#010E09] text-[11px] font-bold flex-shrink-0">Paid</span>
+</div>
+<div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-[#FFFFFF] border border-[#D2D8C7]">
+<span class="font-medium truncate">Receipt RC-086, Logo design</span>
+<span class="px-2.5 py-0.5 rounded-full bg-[#010E09] text-[#F7FAF0] text-[11px] font-bold flex-shrink-0">Generated</span>
+</div>
+<div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-[#FFFFFF] border border-[#D2D8C7]">
+<span class="font-medium truncate">Quote Q-104, Website redesign</span>
+<span class="px-2.5 py-0.5 rounded-full bg-[#FFB85C] text-[#010E09] text-[11px] font-bold flex-shrink-0">Sent</span>
+</div>
+</div>
+</div>
+<div class="md:col-span-5 bg-[#FFFFFF] text-[#010E09] rounded-2xl p-4 border border-[#010E09] flex flex-col justify-between">
+<div>
+<div class="text-[11px] font-bold uppercase tracking-wider text-[#7D8578] mb-1">Client snapshot</div>
+<div class="text-[15px] font-bold text-[#010E09] mb-3 pb-2 border-b border-[#D2D8C7]">Ada Ventures</div>
+</div>
+<div class="space-y-2 text-[13px]">
+<div class="flex items-center justify-between">
+<span class="text-[#7D8578]">Invoiced</span>
+<span class="font-bold">₦250,000</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-[#7D8578]">Paid</span>
+<span class="font-bold text-[#00D37F]">₦100,000</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-[#7D8578]">Outstanding</span>
+<span class="font-bold text-[#F84F94]">₦150,000</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Part 2: Feature grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+<div class="bg-[#FFFFFF] card-hard-shadow p-6 lg:p-7">
+<h4 class="card-title text-[#010E09] mb-2">Quotes and proforma invoices</h4>
+<p class="body-text text-[#7D8578]">Win the job before the work starts.</p>
+</div>
+<div class="bg-[#FFFFFF] card-hard-shadow p-6 lg:p-7">
+<h4 class="card-title text-[#010E09] mb-2">Invoices with your logo and bank details</h4>
+<p class="body-text text-[#7D8578]">Look organised from the first document.</p>
+</div>
+<div class="bg-[#FFFFFF] card-hard-shadow p-6 lg:p-7">
+<h4 class="card-title text-[#010E09] mb-2">Payment links through Paystack</h4>
+<p class="body-text text-[#7D8578]">Clients pay in one tap.</p>
+</div>
+<div class="bg-[#FFFFFF] card-hard-shadow p-6 lg:p-7">
+<h4 class="card-title text-[#010E09] mb-2">Automatic reminders in your name</h4>
+<p class="body-text text-[#7D8578]">Follow up without the awkward message.</p>
+</div>
+<div class="bg-[#FFFFFF] card-hard-shadow p-6 lg:p-7">
+<h4 class="card-title text-[#010E09] mb-2">Receipts on every payment</h4>
+<p class="body-text text-[#7D8578]">Every payment has a record.</p>
+</div>
+<div class="bg-[#FFFFFF] card-hard-shadow p-6 lg:p-7">
+<h4 class="card-title text-[#010E09] mb-2">Client balances</h4>
+<p class="body-text text-[#7D8578]">Know who owes you, at a glance.</p>
+</div>
+</div>
+<div>
+<a class="btn-pill h-[54px] px-8 bg-[#010E09] text-[#F7FAF0] text-[15px] font-semibold" href="https://wa.me/" rel="noopener noreferrer" target="_blank">
+            Start on WhatsApp
+          </a>
+</div>
+</div>
+</div>
+<!-- ================= TAB 2: PAGES (WEBSITE MOCKUP, UNIFIED WARM GRAY #E6EBDD) ================= -->
+<div class="tab-panel transition-opacity duration-300 block bg-[#E6EBDD]" id="tab-panel-pages">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<!-- Main Pages Header -->
+<div class="max-w-[820px] mb-16">
+<span class="px-3 py-1 rounded-full bg-[#00D37F] text-[#010E09] text-[12px] font-bold mb-4 inline-block">
+            Coming soon
+          </span>
+<h3 class="section-headline mb-4 text-[#010E09]">
+            Build your own professional site. Get paid from it.
+          </h3>
+<p class="subhead-text text-[#010E09]">
+            Start from a template, make it yours section by section, and publish it at your own link. Clients book you, pay you, and buy from you on the same site.
+          </p>
+</div>
+<!-- Part 1: A website that's yours from the first template -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center mb-24">
+<div class="lg:col-span-5">
+<h4 class="text-[30px] font-bold leading-tight mb-4 text-[#010E09]">
+              A website that's yours from the first template.
+            </h4>
+<p class="body-text mb-6 text-[#010E09]">
+              Choose a template for portfolios, consultancies, studios, or tutors. Edit every section: hero, about, services, work, testimonials, and contact. Publish at your own link, and share it everywhere your clients already are.
+            </p>
+</div>
+<!-- Realistic Desktop Browser Window Mockup + Mobile Phone Frame -->
+<div class="lg:col-span-7 flex flex-col items-center">
+<div class="w-full flex items-end justify-center gap-4 relative">
+<!-- Desktop Browser Mockup -->
+<div class="w-full max-w-[560px] bg-[#FFFFFF] rounded-[24px] border border-[#010E09] shadow-[4px_4px_0px_#010E09] overflow-hidden">
+<!-- Browser Header / Address Bar -->
+<div class="bg-[#E6EBDD] px-4 py-2.5 border-b border-[#010E09] flex items-center gap-3">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-[#010E09]/30"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#010E09]/30"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#010E09]/30"></span>
+</div>
+<!-- URL input -->
+<div class="flex-1 bg-[#FFFFFF] rounded-full px-3 py-1 text-[11px] text-[#010E09] border border-[#010E09]/40 flex items-center gap-1.5">
+<svg class="w-3 h-3 text-[#010E09]" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="font-semibold">prym.me/amara</span>
+</div>
+<span class="text-[10px] uppercase font-bold text-[#7D8578]">Sample site</span>
+</div>
+<!-- Browser Site Content -->
+<div class="p-4 sm:p-5 space-y-4 max-h-[460px] overflow-y-auto text-[#010E09]">
+<!-- Nav inside site -->
+<div class="flex items-center justify-between pb-3 border-b border-[#D2D8C7]">
+<span class="font-bold text-[15px] tracking-tight">Amara Nwankwo</span>
+<div class="hidden sm:flex items-center gap-4 text-[12px] font-medium">
+<span>Work</span>
+<span>Services</span>
+<span>About</span>
+</div>
+<span class="px-3 py-1 rounded-full bg-[#010E09] text-[#F7FAF0] text-[11px] font-semibold">Book a call</span>
+</div>
+<!-- Hero Section inside site -->
+<div class="p-4 rounded-xl bg-[#F7FAF0] border border-[#D2D8C7] flex flex-col sm:flex-row items-center gap-4">
+<div class="w-full sm:w-1/2">
+<div class="text-[10px] font-bold uppercase tracking-wider text-[#7D8578] mb-1">Interior Designer • Abuja</div>
+<div class="text-[17px] font-black leading-tight mb-2">Interiors for lived-in homes</div>
+<div class="flex gap-2">
+<span class="px-2.5 py-1 rounded-full bg-[#010E09] text-[#F7FAF0] text-[10px] font-bold">Book consultation</span>
+<span class="px-2.5 py-1 rounded-full bg-[#FFFFFF] border border-[#010E09] text-[10px] font-bold">See work</span>
+</div>
+</div>
+<div class="w-full sm:w-1/2 h-24 rounded-lg bg-[#E6EBDD] border border-[#010E09]/30 flex items-center justify-center text-[11px] font-medium text-[#7D8578]">
+                      Project photo
+                    </div>
+</div>
+<!-- Portfolio Grid: 3 tiles -->
+<div>
+<div class="text-[12px] font-bold mb-2">Recent Projects</div>
+<div class="grid grid-cols-3 gap-2">
+<div class="h-16 rounded-lg bg-[#FDF0F5] border border-[#010E09]/30 flex items-center justify-center text-[10px] font-semibold text-[#7D8578]">Project photo</div>
+<div class="h-16 rounded-lg bg-[#F4F8DE] border border-[#010E09]/30 flex items-center justify-center text-[10px] font-semibold text-[#7D8578]">Project photo</div>
+<div class="h-16 rounded-lg bg-[#EBFBF3] border border-[#010E09]/30 flex items-center justify-center text-[10px] font-semibold text-[#7D8578]">Project photo</div>
+</div>
+</div>
+<!-- Services list with 3 rows -->
+<div>
+<div class="text-[12px] font-bold mb-2">Services &amp; Pricing</div>
+<div class="space-y-1.5 text-[12px]">
+<div class="p-2 rounded-lg bg-[#FFFFFF] border border-[#D2D8C7] flex items-center justify-between">
+<div>
+<div class="font-bold">Home consultation</div>
+<div class="text-[11px] text-[#7D8578]">₦45,000</div>
+</div>
+<button class="px-2.5 py-1 rounded-full bg-[#010E09] text-[#F7FAF0] text-[10px] font-bold">Book</button>
+</div>
+<div class="p-2 rounded-lg bg-[#FFFFFF] border border-[#D2D8C7] flex items-center justify-between">
+<div>
+<div class="font-bold">Full room design</div>
+<div class="text-[11px] text-[#7D8578]">from ₦350,000</div>
+</div>
+<button class="px-2.5 py-1 rounded-full bg-[#010E09] text-[#F7FAF0] text-[10px] font-bold">Book</button>
+</div>
+<div class="p-2 rounded-lg bg-[#FFFFFF] border border-[#D2D8C7] flex items-center justify-between">
+<div>
+<div class="font-bold">Styling session</div>
+<div class="text-[11px] text-[#7D8578]">₦120,000</div>
+</div>
+<button class="px-2.5 py-1 rounded-full bg-[#010E09] text-[#F7FAF0] text-[10px] font-bold">Book</button>
+</div>
+</div>
+</div>
+<!-- Testimonial Quote -->
+<div class="p-3 rounded-lg bg-[#E6EBDD]/60 border border-[#D2D8C7] text-[11px] italic">
+                    "Amara redesigned our duplex living area ahead of schedule. Payment and milestones were completely frictionless."
+                    <div class="mt-1 font-bold not-italic text-[10px] text-[#7D8578]">— Sample client</div>
+</div>
+<!-- Footer Strip inside site -->
+<div class="pt-2 text-center text-[10px] text-[#7D8578] border-t border-[#D2D8C7]">
+                    Built with Prymsuite
+                  </div>
+</div>
+</div>
+<!-- Beside browser: Mobile phone frame showing the same site layout -->
+<div class="hidden sm:block w-[140px] bg-[#FFFFFF] rounded-[24px] border-2 border-[#010E09] shadow-[4px_4px_0px_#010E09] p-2 flex-shrink-0 -ml-8 mb-4 z-20">
+<div class="w-8 h-1 bg-[#010E09] rounded-full mx-auto mb-2"></div>
+<div class="h-6 rounded-full bg-[#E6EBDD] flex items-center px-2 text-[8px] font-bold mb-2 truncate">
+                  prym.me/amara
+                </div>
+<div class="h-10 rounded bg-[#B0D226] p-1 text-[8px] font-bold mb-1 leading-tight">
+                  Amara Nwankwo
+                </div>
+<div class="h-12 rounded bg-[#F4F8DE] p-1 text-[7px] text-[#7D8578] mb-1">
+                  Project photo
+                </div>
+<div class="space-y-1">
+<div class="h-5 rounded bg-[#EBFBF3] text-[7px] font-bold flex items-center justify-between px-1">
+<span>Consult</span>
+<span>₦45k</span>
+</div>
+<div class="h-5 rounded bg-[#EBFBF3] text-[7px] font-bold flex items-center justify-between px-1">
+<span>Design</span>
+<span>₦350k</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Row of 4 template thumbnails beneath visual -->
+<div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+<span class="text-[12px] font-bold mr-2 text-[#010E09]">Templates:</span>
+<button class="px-3.5 py-1.5 rounded-full bg-[#FFFFFF] border-2 border-[#010E09] text-[12px] font-bold text-[#010E09] shadow-[2px_2px_0px_#010E09]">
+                Portfolio (Selected)
+              </button>
+<button class="px-3.5 py-1.5 rounded-full bg-[#FFFFFF]/70 border border-[#010E09] text-[12px] font-medium text-[#010E09] hover:bg-[#FFFFFF]">
+                Consultancy
+              </button>
+<button class="px-3.5 py-1.5 rounded-full bg-[#FFFFFF]/70 border border-[#010E09] text-[12px] font-medium text-[#010E09] hover:bg-[#FFFFFF]">
+                Studio
+              </button>
+<button class="px-3.5 py-1.5 rounded-full bg-[#FFFFFF]/70 border border-[#010E09] text-[12px] font-medium text-[#010E09] hover:bg-[#FFFFFF]">
+                Tutor
+              </button>
+</div>
+</div>
+</div>
+<!-- Part 2: Clients book, pay, and buy from the same site -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center mb-24">
+<div class="lg:col-span-6 lg:order-2">
+<h4 class="text-[30px] font-bold leading-tight mb-4 text-[#010E09]">
+              Clients book, pay, and buy from the same site.
+            </h4>
+<p class="body-text mb-6 text-[#010E09]">
+              Consultations with an open calendar. Deposits and milestone payments that clear through your own Paystack account. Digital products that deliver as soon as they're paid for.
+            </p>
+<div class="space-y-3 text-[15px] font-semibold text-[#010E09]">
+<div class="flex items-center gap-3">
+<span class="w-5 h-5 rounded-full bg-[#010E09] text-[#00D37F] flex items-center justify-center text-[12px] flex-shrink-0 font-bold">✓</span>
+<span>Paid consultation bookings with a calendar</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="w-5 h-5 rounded-full bg-[#010E09] text-[#00D37F] flex items-center justify-center text-[12px] flex-shrink-0 font-bold">✓</span>
+<span>Digital products delivered on payment</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="w-5 h-5 rounded-full bg-[#010E09] text-[#00D37F] flex items-center justify-center text-[12px] flex-shrink-0 font-bold">✓</span>
+<span>Milestone payments with no third-party commission</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="w-5 h-5 rounded-full bg-[#010E09] text-[#00D37F] flex items-center justify-center text-[12px] flex-shrink-0 font-bold">✓</span>
+<span>Receipts sent to the client the moment they pay</span>
+</div>
+</div>
+</div>
+<!-- 3 Cards in a row with 1px black borders & 4px hard offset shadows -->
+<div class="lg:col-span-6 lg:order-1 space-y-4">
+<!-- 1. Consultation Card -->
+<div class="bg-[#FFFFFF] card-hard-shadow p-5">
+<div class="flex items-center justify-between text-[15px] font-bold text-[#010E09] mb-3">
+<span>1:1 design consultation</span>
+<span>₦25,000 an hour</span>
+</div>
+<div class="flex items-center justify-between gap-2">
+<div class="flex gap-2 text-[12px] font-semibold">
+<span class="py-1 px-2.5 rounded-lg bg-[#E6EBDD] text-[#010E09]">Mon 10:00</span>
+<span class="py-1 px-2.5 rounded-lg bg-[#010E09] text-[#F7FAF0]">Tue 14:00</span>
+<span class="py-1 px-2.5 rounded-lg bg-[#E6EBDD] text-[#010E09]">Thu 16:30</span>
+</div>
+<button class="px-4 py-1.5 rounded-full bg-[#010E09] text-[#F7FAF0] text-[12px] font-bold">Book</button>
+</div>
+</div>
+<!-- 2. Digital Product Card -->
+<div class="bg-[#FFFFFF] card-hard-shadow p-5 flex items-center justify-between gap-4">
+<div>
+<div class="text-[15px] font-bold text-[#010E09]">Brand colour guide, PDF</div>
+<div class="text-[13px] text-[#7D8578]">₦15,000</div>
+</div>
+<button class="px-5 py-2 rounded-full bg-[#010E09] text-[#F7FAF0] text-[13px] font-bold">Buy</button>
+</div>
+<!-- 3. Milestone Card -->
+<div class="bg-[#FFFFFF] card-hard-shadow p-5 flex items-center justify-between gap-4">
+<div>
+<div class="text-[15px] font-bold text-[#010E09]">Milestone 2 of 3</div>
+<div class="text-[13px] font-bold text-[#010E09]">₦120,000 due</div>
+</div>
+<button class="px-5 py-2 rounded-full bg-[#010E09] text-[#F7FAF0] text-[13px] font-bold">Pay now</button>
+</div>
+</div>
+</div>
+<!-- Part 3: Edit your site by describing the change -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center mb-16">
+<div class="lg:col-span-5">
+<h4 class="text-[30px] font-bold leading-tight mb-4 text-[#010E09]">
+              Edit your site by describing the change.
+            </h4>
+<p class="body-text text-[#010E09]">
+              Type the change in a sentence, and the site updates. Make the headline shorter. Move testimonials above services. Add a booking button under the intro. Each AI edit uses a credit from your PrymAgent balance.
+            </p>
+</div>
+<!-- Chat panel + Before/after preview -->
+<div class="lg:col-span-7">
+<div class="bg-[#FFFFFF] card-hard-shadow p-5 sm:p-6">
+<div class="flex items-center justify-between mb-4">
+<span class="text-[12px] font-bold uppercase tracking-wider text-[#7D8578]">Site Assistant</span>
+<span class="px-2.5 py-0.5 rounded-full bg-[#010E09] text-[#00D37F] text-[11px] font-bold">Coming soon</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Chat panel -->
+<div class="bg-[#101820] text-[#F7FAF0] rounded-2xl p-4 space-y-3 text-[13px]">
+<div class="bg-[#161D25] border border-[#2A3440] p-3 rounded-xl">
+                    Make my headline shorter and add a book-a-call button
+                  </div>
+<div class="bg-[#00D37F] text-[#010E09] p-3 rounded-xl font-semibold">
+                    Done. Headline updated, booking button added below your intro.
+                  </div>
+</div>
+<!-- Before and after preview -->
+<div class="bg-[#F7FAF0] rounded-2xl p-4 border border-[#010E09] flex flex-col justify-center space-y-3">
+<div>
+<div class="text-[11px] font-bold uppercase text-[#7D8578] mb-1">Before</div>
+<div class="text-[14px] text-[#7D8578] line-through">Interior designer for homes that feel lived in</div>
+</div>
+<div class="border-t border-[#D2D8C7] pt-3">
+<div class="text-[11px] font-bold uppercase text-[#010E09] mb-1">After</div>
+<div class="text-[15px] font-bold text-[#010E09]">Interiors for lived-in homes</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Closing row: Notification input -->
+<div class="bg-[#FFFFFF] card-hard-shadow p-6 sm:p-8 max-w-[720px]">
+<form class="flex flex-col sm:flex-row gap-3 mb-3" onsubmit="event.preventDefault(); alert('You will be notified the day Pages launches!');">
+<input class="h-[52px] px-5 rounded-full border border-[#010E09] bg-[#F7FAF0] text-[15px] focus:outline-none focus:ring-2 focus:ring-[#010E09] flex-grow" placeholder="Enter your email" required="" type="email"/>
+<button class="btn-pill h-[52px] px-7 bg-[#010E09] text-[#F7FAF0] text-[15px] whitespace-nowrap" type="submit">
+              Get notified when Pages launches
+            </button>
+</form>
+<p class="caption-text text-[#7D8578]">
+            We'll tell you the day Pages opens. PrymAgent users get first access.
+          </p>
+</div>
+</div>
+</div>
+<!-- ================= TAB 3: PRYMSEARCH ================= -->
+<div class="tab-panel transition-opacity duration-300 hidden bg-[#E6EBDD]" id="tab-panel-prymsearch">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<div class="relative py-4 mb-12">
+<!-- Large Agent Lime circle behind headline -->
+<div aria-hidden="true" class="w-48 h-48 sm:w-64 sm:h-64 rounded-full bg-[#B0D226] absolute -top-6 -left-6 z-0"></div>
+<div class="relative z-10 max-w-[800px]">
+<span class="px-3 py-1 rounded-full bg-[#010E09] text-[#B0D226] text-[12px] font-bold mb-4 inline-block">
+              Pre-registration open
+            </span>
+<h3 class="section-headline text-[#010E09] mb-4">
+              Be found by people already looking.
+            </h3>
+<p class="subhead-text text-[#010E09]">
+              Clients describe the job in plain English. Prymsearch shortlists verified professionals and consultants, and shows the reason for each match. Join the pool, and your profile is ready when they search.
+            </p>
+</div>
+</div>
+<!-- Three numbered steps -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+<div class="bg-[#FFFFFF] card-hard-shadow p-6 flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-[#010E09] text-[#B0D226] font-extrabold text-[16px] flex items-center justify-center flex-shrink-0">1</div>
+<p class="text-[16px] font-bold text-[#010E09] pt-1.5">A client describes the job.</p>
+</div>
+<div class="bg-[#FFFFFF] card-hard-shadow p-6 flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-[#010E09] text-[#B0D226] font-extrabold text-[16px] flex items-center justify-center flex-shrink-0">2</div>
+<p class="text-[16px] font-bold text-[#010E09] pt-1.5">We shortlist verified people only.</p>
+</div>
+<div class="bg-[#FFFFFF] card-hard-shadow p-6 flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-[#010E09] text-[#B0D226] font-extrabold text-[16px] flex items-center justify-center flex-shrink-0">3</div>
+<p class="text-[16px] font-bold text-[#010E09] pt-1.5">The client chooses who to contact.</p>
+</div>
+</div>
+<!-- Search visual card -->
+<div class="bg-[#FFFFFF] card-hard-shadow p-6 lg:p-8 mb-8" id="prymsearch-register">
+<div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+<div class="flex flex-wrap gap-2">
+<span class="px-3.5 py-1.5 rounded-full bg-[#E6EBDD] border border-[#010E09] text-[12px] font-bold text-[#010E09]">Category</span>
+<span class="px-3.5 py-1.5 rounded-full bg-[#E6EBDD] border border-[#010E09] text-[12px] font-bold text-[#010E09]">City</span>
+<span class="px-3.5 py-1.5 rounded-full bg-[#E6EBDD] border border-[#010E09] text-[12px] font-bold text-[#010E09]">Budget</span>
+<span class="px-3.5 py-1.5 rounded-full bg-[#E6EBDD] border border-[#010E09] text-[12px] font-bold text-[#010E09]">Availability</span>
+</div>
+<span class="text-[12px] font-medium text-[#7D8578]">Sample data</span>
+</div>
+<div class="p-5 rounded-2xl bg-[#F4F8DE] border border-[#010E09] mb-6">
+<div class="text-[11px] font-bold uppercase tracking-wider text-[#7D8578] mb-1">Client Request</div>
+<div class="text-[17px] font-bold text-[#010E09]">
+              "I need a caterer for 80 guests in Lekki, Saturday 14 December, budget ₦500,000."
+            </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+<!-- Result 1 -->
+<div class="p-5 rounded-2xl bg-[#F7FAF0] border border-[#010E09]">
+<div class="flex items-start justify-between gap-3 mb-3">
+<div>
+<div class="text-[17px] font-bold text-[#010E09]">Chidinma Okafor</div>
+<div class="text-[14px] text-[#7D8578]">Event caterer, Lekki</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#00D37F] text-[#010E09] text-[11px] font-bold flex-shrink-0">
+                  ✓ Verified
+                </span>
+</div>
+<div class="text-[15px] font-bold text-[#010E09] mb-2">From ₦4,500 a plate.</div>
+<div class="text-[13px] text-[#010E09] bg-[#FFFFFF] p-3 rounded-xl border border-[#D2D8C7]">
+<span class="font-bold">Matched on:</span> 80-guest events, Saturday availability, budget.
+              </div>
+</div>
+<!-- Result 2 -->
+<div class="p-5 rounded-2xl bg-[#F7FAF0] border border-[#010E09]">
+<div class="flex items-start justify-between gap-3 mb-3">
+<div>
+<div class="text-[17px] font-bold text-[#010E09]">Tunde Balogun</div>
+<div class="text-[14px] text-[#7D8578]">Buffet and plated caterer, Ikeja</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#00D37F] text-[#010E09] text-[11px] font-bold flex-shrink-0">
+                  ✓ Verified
+                </span>
+</div>
+<div class="text-[15px] font-bold text-[#010E09] mb-2">From ₦3,800 a plate.</div>
+<div class="text-[13px] text-[#010E09] bg-[#FFFFFF] p-3 rounded-xl border border-[#D2D8C7]">
+<span class="font-bold">Matched on:</span> outdoor events, budget, December dates.
+              </div>
+</div>
+</div>
+</div>
+<!-- Join the pool CTA -->
+<div class="flex flex-col sm:flex-row sm:items-center gap-4">
+<a class="btn-pill h-[54px] px-8 bg-[#010E09] text-[#F7FAF0] text-[15px] font-semibold self-start" href="#where-do-i-start">
+            Join the pool.
+          </a>
+<p class="caption-text text-[#7D8578]">
+            Your profile is listed when Prymsearch opens. You can pause or remove it at any time.
+          </p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. HOW THE THREE WORK TOGETHER (Ledger Navy #161D25) -->
+<section class="w-full bg-[#161D25] text-[#F7FAF0] py-20 lg:py-28 px-6 lg:px-12 relative overflow-hidden" id="loop-section">
+<!-- Subtle wave & dot grid SVG pattern at 15% opacity -->
+<svg aria-hidden="true" class="absolute inset-0 w-full h-full pointer-events-none opacity-15" fill="none" preserveaspectratio="none" viewbox="0 0 1440 600">
+<defs>
+<pattern height="32" id="ledger-dots" patternunits="userSpaceOnUse" width="32" x="0" y="0">
+<circle cx="2" cy="2" fill="#B0D226" r="1.5"></circle>
+</pattern>
+</defs>
+<rect fill="url(#ledger-dots)" height="600" width="1440"></rect>
+<path d="M-40 380 C 340 220, 720 540, 1480 200" stroke="#B0D226" stroke-width="2.5"></path>
+<path d="M-40 460 C 380 300, 780 580, 1480 280" stroke="#48D7FF" stroke-width="2"></path>
+</svg>
+<div class="max-w-[1440px] mx-auto relative z-10">
+<div class="text-center max-w-[800px] mx-auto mb-14">
+<span class="ui-label text-[#B0D226] uppercase tracking-wider block mb-3">Continuous Flywheel</span>
+<h2 class="section-headline text-[#F7FAF0]">
+        One loop. Found, booked, paid, proven.
+      </h2>
+</div>
+<!-- 4-Stop Diagram -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch mb-12">
+<!-- Stop 1: Found -->
+<div class="bg-[#101820] rounded-[24px] border border-[#2A3440] p-6 lg:p-7 flex flex-col justify-between shadow-[4px_4px_0px_#010E09] hover:border-[#B0D226] transition-colors">
+<div>
+<div class="w-12 h-12 rounded-full bg-[#B0D226] text-[#010E09] font-extrabold text-[18px] flex items-center justify-center mb-5">
+            1
+          </div>
+<div class="text-[12px] font-bold text-[#B0D226] uppercase tracking-wider mb-1">Prymsearch</div>
+<h3 class="text-[20px] font-bold text-[#F7FAF0] mb-3">Found</h3>
+<p class="body-text text-[#D2D8C7]">
+            A client describes what they need in simple words, and finds your verified listing.
+          </p>
+</div>
+<div class="mt-6 pt-4 border-t border-[#2A3440] text-[13px] text-[#7D8578]">
+          Inbound discovery
+        </div>
+</div>
+<!-- Stop 2: Booked -->
+<div class="bg-[#101820] rounded-[24px] border border-[#2A3440] p-6 lg:p-7 flex flex-col justify-between shadow-[4px_4px_0px_#010E09] hover:border-[#00D37F] transition-colors">
+<div>
+<div class="w-12 h-12 rounded-full bg-[#00D37F] text-[#010E09] font-extrabold text-[18px] flex items-center justify-center mb-5">
+            2
+          </div>
+<div class="text-[12px] font-bold text-[#00D37F] uppercase tracking-wider mb-1">Pages</div>
+<h3 class="text-[20px] font-bold text-[#F7FAF0] mb-3">Booked</h3>
+<p class="body-text text-[#D2D8C7]">
+            They book a session, purchase your deliverable, or accept a project milestone directly on your page.
+          </p>
+</div>
+<div class="mt-6 pt-4 border-t border-[#2A3440] text-[13px] text-[#7D8578]">
+          Direct checkout
+        </div>
+</div>
+<!-- Stop 3: Paid -->
+<div class="bg-[#101820] rounded-[24px] border border-[#2A3440] p-6 lg:p-7 flex flex-col justify-between shadow-[4px_4px_0px_#010E09] hover:border-[#F84F94] transition-colors">
+<div>
+<div class="w-12 h-12 rounded-full bg-[#F84F94] text-[#010E09] font-extrabold text-[18px] flex items-center justify-center mb-5">
+            3
+          </div>
+<div class="text-[12px] font-bold text-[#F84F94] uppercase tracking-wider mb-1">PrymAgent</div>
+<h3 class="text-[20px] font-bold text-[#F7FAF0] mb-3">Paid</h3>
+<p class="body-text text-[#D2D8C7]">
+            The invoice goes out, the payment is collected, and the receipt is sent the instant funds land.
+          </p>
+</div>
+<div class="mt-6 pt-4 border-t border-[#2A3440] text-[13px] text-[#7D8578]">
+          Automated settlement
+        </div>
+</div>
+<!-- Stop 4: Proven -->
+<div class="bg-[#101820] rounded-[24px] border border-[#2A3440] p-6 lg:p-7 flex flex-col justify-between shadow-[4px_4px_0px_#010E09] hover:border-[#48D7FF] transition-colors">
+<div>
+<div class="w-12 h-12 rounded-full bg-[#48D7FF] text-[#010E09] font-extrabold text-[18px] flex items-center justify-center mb-5">
+            4
+          </div>
+<div class="text-[12px] font-bold text-[#48D7FF] uppercase tracking-wider mb-1">The Record</div>
+<h3 class="text-[20px] font-bold text-[#F7FAF0] mb-3">Proven</h3>
+<p class="body-text text-[#D2D8C7]">
+            Each paid job adds to your verified history, so the next client finds you more easily.
+          </p>
+</div>
+<div class="mt-6 pt-4 border-t border-[#2A3440] text-[13px] text-[#7D8578]">
+          Automatic reputation
+        </div>
+</div>
+</div>
+<!-- Connecting Banner -->
+<div class="p-6 rounded-[24px] bg-[#101820] border border-[#2A3440] flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-[#B0D226] text-[#010E09] flex items-center justify-center font-bold">
+          ↻
+        </div>
+<span class="text-[16px] sm:text-[17px] font-semibold text-[#F7FAF0]">
+          One login, one record, one client history across all three.
+        </span>
+</div>
+<a class="btn-pill h-[46px] px-6 bg-[#B0D226] text-[#010E09] text-[14px] font-bold" href="https://wa.me/" rel="noopener noreferrer" target="_blank">
+        Join on WhatsApp
+      </a>
+</div>
+</div>
+</section>
+<!-- 7. WHO IT IS FOR -->
+<section class="w-full bg-[#F7FAF0] text-[#010E09] py-20 lg:py-24 px-6 lg:px-12 border-b border-[#D2D8C7]" id="audience">
+<div class="max-w-[1440px] mx-auto">
+<h2 class="section-headline text-[#010E09] mb-10 max-w-[20ch]">
+      Built for the people who sell their time.
+    </h2>
+<div class="flex flex-wrap gap-3.5 sm:gap-4 items-center">
+<span class="px-6 py-3.5 rounded-full bg-[#F4F8DE] border-2 border-[#010E09] text-[16px] sm:text-[18px] font-bold text-[#010E09] shadow-[3px_3px_0px_#010E09]">
+        Consultants
+      </span>
+<span class="px-6 py-3.5 rounded-full bg-[#FDF0F5] border-2 border-[#010E09] text-[16px] sm:text-[18px] font-bold text-[#010E09] shadow-[3px_3px_0px_#010E09]">
+        Designers
+      </span>
+<span class="px-6 py-3.5 rounded-full bg-[#EBFBF3] border-2 border-[#010E09] text-[16px] sm:text-[18px] font-bold text-[#010E09] shadow-[3px_3px_0px_#010E09]">
+        Tutors
+      </span>
+<span class="px-6 py-3.5 rounded-full bg-[#E6EBDD] border-2 border-[#010E09] text-[16px] sm:text-[18px] font-bold text-[#010E09] shadow-[3px_3px_0px_#010E09]">
+        Developers
+      </span>
+<span class="px-6 py-3.5 rounded-full bg-[#FDF0F5] border-2 border-[#010E09] text-[16px] sm:text-[18px] font-bold text-[#010E09] shadow-[3px_3px_0px_#010E09]">
+        Photographers
+      </span>
+<span class="px-6 py-3.5 rounded-full bg-[#F4F8DE] border-2 border-[#010E09] text-[16px] sm:text-[18px] font-bold text-[#010E09] shadow-[3px_3px_0px_#010E09]">
+        Agencies
+      </span>
+<span class="px-6 py-3.5 rounded-full bg-[#EBFBF3] border-2 border-[#010E09] text-[16px] sm:text-[18px] font-bold text-[#010E09] shadow-[3px_3px_0px_#010E09]">
+        Service providers
+      </span>
+</div>
+</div>
+</section>
+<!-- 8. "WHERE DO I START?" REPLACES "THREE WAYS IN" -->
+<section class="w-full bg-[#161D25] text-[#F7FAF0] py-20 lg:py-28 px-6 lg:px-12 relative overflow-hidden" id="where-do-i-start">
+<!-- Subtle wave & dot grid SVG pattern -->
+<svg aria-hidden="true" class="absolute inset-0 w-full h-full pointer-events-none opacity-15" fill="none" preserveaspectratio="none" viewbox="0 0 1440 600">
+<defs>
+<pattern height="32" id="start-dots" patternunits="userSpaceOnUse" width="32" x="0" y="0">
+<circle cx="2" cy="2" fill="#B0D226" r="1.5"></circle>
+</pattern>
+</defs>
+<rect fill="url(#start-dots)" height="600" width="1440"></rect>
+<path d="M-40 380 C 340 220, 720 540, 1480 200" stroke="#B0D226" stroke-width="2.5"></path>
+<path d="M-40 460 C 380 300, 780 580, 1480 280" stroke="#48D7FF" stroke-width="2"></path>
+</svg>
+<div class="max-w-[1440px] mx-auto relative z-10">
+<div class="mb-12">
+<h2 class="section-headline text-[#F7FAF0] mb-3">
+        Where do I start?
+      </h2>
+<p class="subhead-text text-[#D2D8C7]">
+        Pick the path that fits your business today.
+      </p>
+</div>
+<!-- Two chunky cards side by side on desktop (stacked on mobile) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch mb-8">
+<!-- Card 1: Solo Coral tint background, Prym Black text -->
+<div class="bg-[#FDF0F5] text-[#010E09] rounded-[24px] border border-[#010E09] p-8 lg:p-9 flex flex-col justify-between shadow-[4px_4px_0px_#010E09]">
+<div>
+<div class="flex items-center justify-between mb-6">
+<span class="px-3 py-1 rounded-full bg-[#010E09] text-[#F7FAF0] text-[12px] font-bold">
+              Live now
+            </span>
+<span class="text-[14px] font-semibold text-[#010E09]">PrymAgent</span>
+</div>
+<h3 class="card-title text-[24px] mb-4">
+            I bill my clients.
+          </h3>
+<p class="body-text text-[#010E09] mb-8">
+            Start with PrymAgent. Send invoices, reminders, and receipts from WhatsApp, and get paid through your own Paystack account.
+          </p>
+</div>
+<div>
+<a class="btn-pill h-[52px] px-8 bg-[#010E09] text-[#F7FAF0] text-[15px] font-bold w-full sm:w-auto" href="https://wa.me/" rel="noopener noreferrer" target="_blank">
+            Start on WhatsApp
+          </a>
+</div>
+</div>
+<!-- Card 2: Dynamic Green tint background, Prym Black text -->
+<div class="bg-[#EBFBF3] text-[#010E09] rounded-[24px] border border-[#010E09] p-8 lg:p-9 flex flex-col justify-between shadow-[4px_4px_0px_#010E09]">
+<div>
+<div class="flex items-center justify-between mb-6">
+<span class="px-3 py-1 rounded-full bg-[#010E09] text-[#00D37F] text-[12px] font-bold">
+              Coming soon
+            </span>
+<span class="text-[14px] font-semibold text-[#010E09]">Pages &amp; Prymsearch</span>
+</div>
+<h3 class="card-title text-[24px] mb-4">
+            I want my own site, and to be found.
+          </h3>
+<p class="body-text text-[#010E09] mb-8">
+            Build your professional site, take bookings and payments, and join the pool that Prymsearch draws from. Pre-register now, and you're ready on day one.
+          </p>
+</div>
+<div>
+<a class="btn-pill h-[52px] px-8 bg-[#010E09] text-[#F7FAF0] text-[15px] font-bold w-full sm:w-auto" href="#see-in-action" onclick="switchWorkTab('prymsearch')">
+            Join the pool
+          </a>
+</div>
+</div>
+</div>
+<!-- Below the cards: Caption in Stone Gray -->
+<p class="caption-text text-[#7D8578]">
+      Not sure? Start with PrymAgent. Your billing history is the foundation for everything else.
+    </p>
+</div>
+</section>
+<!-- 9. QUESTIONS (6 Accordion Rows) -->
+<section class="w-full bg-[#F7FAF0] text-[#010E09] py-20 lg:py-28 px-6 lg:px-12 border-b border-[#D2D8C7]" id="questions">
+<div class="max-w-[1440px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+<div class="lg:col-span-5">
+<h2 class="section-headline text-[#010E09] mb-4">
+        Questions, answered plainly.
+      </h2>
+<p class="body-text text-[#7D8578]">
+        Everything you need to know about billing, privacy, funds settlement, and upcoming features.
+      </p>
+</div>
+<div class="lg:col-span-7 border-t border-[#D2D8C7]">
+<!-- FAQ 1 -->
+<div class="faq-item border-b border-[#D2D8C7]" data-open="false">
+<button aria-expanded="false" class="faq-trigger w-full py-6 flex items-center justify-between gap-4 text-left" type="button">
+<span class="text-[18px] font-semibold text-[#010E09]">Is it free to start?</span>
+<span class="w-9 h-9 rounded-full bg-[#010E09] text-[#F7FAF0] flex items-center justify-center flex-shrink-0">
+<svg aria-hidden="true" class="faq-plus w-4 h-4" fill="none" viewbox="0 0 16 16">
+<path d="M8 3V13M3 8H13" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</span>
+</button>
+<div class="faq-answer">
+<div class="faq-answer-inner">
+<p class="pb-6 body-text text-[#010E09]">
+              Yes. Your first billing workflow is free. You buy credits as you need them without recurring monthly subscription lock-ins.
+            </p>
+</div>
+</div>
+</div>
+<!-- FAQ 2 -->
+<div class="faq-item border-b border-[#D2D8C7]" data-open="false">
+<button aria-expanded="false" class="faq-trigger w-full py-6 flex items-center justify-between gap-4 text-left" type="button">
+<span class="text-[18px] font-semibold text-[#010E09]">Do I need to install an app?</span>
+<span class="w-9 h-9 rounded-full bg-[#010E09] text-[#F7FAF0] flex items-center justify-center flex-shrink-0">
+<svg aria-hidden="true" class="faq-plus w-4 h-4" fill="none" viewbox="0 0 16 16">
+<path d="M8 3V13M3 8H13" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</span>
+</button>
+<div class="faq-answer">
+<div class="faq-answer-inner">
+<p class="pb-6 body-text text-[#010E09]">
+              No. PrymAgent lives entirely in WhatsApp. You interact with it just like sending messages to a teammate or assistant.
+            </p>
+</div>
+</div>
+</div>
+<!-- FAQ 3 -->
+<div class="faq-item border-b border-[#D2D8C7]" data-open="false">
+<button aria-expanded="false" class="faq-trigger w-full py-6 flex items-center justify-between gap-4 text-left" type="button">
+<span class="text-[18px] font-semibold text-[#010E09]">Is this only for freelancers?</span>
+<span class="w-9 h-9 rounded-full bg-[#010E09] text-[#F7FAF0] flex items-center justify-center flex-shrink-0">
+<svg aria-hidden="true" class="faq-plus w-4 h-4" fill="none" viewbox="0 0 16 16">
+<path d="M8 3V13M3 8H13" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</span>
+</button>
+<div class="faq-answer">
+<div class="faq-answer-inner">
+<p class="pb-6 body-text text-[#010E09]">
+              No. Consultants, professionals, educators, and service businesses of every kind use it, from solo operators to boutique advisory firms.
+            </p>
+</div>
+</div>
+</div>
+<!-- FAQ 4 -->
+<div class="faq-item border-b border-[#D2D8C7]" data-open="false">
+<button aria-expanded="false" class="faq-trigger w-full py-6 flex items-center justify-between gap-4 text-left" type="button">
+<span class="text-[18px] font-semibold text-[#010E09]">Where does client money go?</span>
+<span class="w-9 h-9 rounded-full bg-[#010E09] text-[#F7FAF0] flex items-center justify-center flex-shrink-0">
+<svg aria-hidden="true" class="faq-plus w-4 h-4" fill="none" viewbox="0 0 16 16">
+<path d="M8 3V13M3 8H13" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</span>
+</button>
+<div class="faq-answer">
+<div class="faq-answer-inner">
+<p class="pb-6 body-text text-[#010E09]">
+              Directly to your own registered Nigerian bank account or your Paystack account. Prymsuite never holds client funds.
+            </p>
+</div>
+</div>
+</div>
+<!-- FAQ 5 -->
+<div class="faq-item border-b border-[#D2D8C7]" data-open="false">
+<button aria-expanded="false" class="faq-trigger w-full py-6 flex items-center justify-between gap-4 text-left" type="button">
+<span class="text-[18px] font-semibold text-[#010E09]">When does my profile go public?</span>
+<span class="w-9 h-9 rounded-full bg-[#010E09] text-[#F7FAF0] flex items-center justify-center flex-shrink-0">
+<svg aria-hidden="true" class="faq-plus w-4 h-4" fill="none" viewbox="0 0 16 16">
+<path d="M8 3V13M3 8H13" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</span>
+</button>
+<div class="faq-answer">
+<div class="faq-answer-inner">
+<p class="pb-6 body-text text-[#010E09]">
+              Only when you explicitly choose to be listed, and when Prymsearch opens. You retain full control and can pause or remove your listing whenever you want.
+            </p>
+</div>
+</div>
+</div>
+<!-- FAQ 6 -->
+<div class="faq-item border-b border-[#D2D8C7]" data-open="false">
+<button aria-expanded="false" class="faq-trigger w-full py-6 flex items-center justify-between gap-4 text-left" type="button">
+<span class="text-[18px] font-semibold text-[#010E09]">Is this an accounting system?</span>
+<span class="w-9 h-9 rounded-full bg-[#010E09] text-[#F7FAF0] flex items-center justify-center flex-shrink-0">
+<svg aria-hidden="true" class="faq-plus w-4 h-4" fill="none" viewbox="0 0 16 16">
+<path d="M8 3V13M3 8H13" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</span>
+</button>
+<div class="faq-answer">
+<div class="faq-answer-inner">
+<p class="pb-6 body-text text-[#010E09]">
+              No. It handles billing, receipts, booking payments, and verified records that make your accountant's job straightforward.
+            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 10. CLOSING (Prym Black with wave pattern) -->
+<section class="w-full bg-[#010E09] text-[#F7FAF0] py-24 lg:py-32 px-6 lg:px-12 relative overflow-hidden">
+<!-- Subtle Agent Lime wave pattern at 15% opacity -->
+<svg aria-hidden="true" class="absolute inset-0 w-full h-full pointer-events-none opacity-15" fill="none" preserveaspectratio="none" viewbox="0 0 1440 600">
+<defs>
+<pattern height="32" id="closing-dots" patternunits="userSpaceOnUse" width="32" x="0" y="0">
+<circle cx="2" cy="2" fill="#B0D226" r="1.5"></circle>
+</pattern>
+</defs>
+<rect fill="url(#closing-dots)" height="600" width="1440"></rect>
+<path d="M-40 420 C 320 280, 680 540, 1480 220" stroke="#B0D226" stroke-width="3"></path>
+<path d="M-40 490 C 380 350, 740 590, 1480 290" stroke="#B0D226" stroke-width="2"></path>
+</svg>
+<div class="max-w-[1440px] mx-auto text-center relative z-10 flex flex-col items-center">
+<h2 class="closing-headline text-[#F7FAF0] max-w-[20ch]">
+      Your next invoice is one message away.
+    </h2>
+<div class="mt-10">
+<a class="btn-pill h-[56px] px-10 bg-[#B0D226] text-[#010E09] text-[16px] font-bold shadow-[4px_4px_0px_rgba(255,255,255,0.2)] hover:bg-[#c2e431]" href="https://wa.me/" rel="noopener noreferrer" target="_blank">
+        Start on WhatsApp
+      </a>
+</div>
+</div>
+</section>
+<!-- 11. FOOTER -->
+<footer class="w-full bg-[#F7FAF0] text-[#010E09] pt-20 pb-16 px-6 lg:px-12 border-t border-[#D2D8C7]">
+<div class="max-w-[1440px] mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-[#D2D8C7]">
+<!-- Lockup at 48px -->
+<div class="md:col-span-5 flex items-start">
+<a class="flex items-center gap-3.5 text-decoration-none" href="#">
+<div class="w-12 h-12 bg-[#010E09] flex items-center justify-center">
+<div class="w-4 h-4 bg-[#B0D226]"></div>
+</div>
+<span class="font-extrabold text-[48px] tracking-tight text-[#010E09] lowercase leading-none">prym</span>
+</a>
+</div>
+<!-- Products -->
+<div class="md:col-span-2 space-y-3">
+<div class="ui-label text-[#7D8578] uppercase tracking-wider text-[13px]">Products</div>
+<ul class="space-y-2.5 text-[15px] font-medium">
+<li><a class="hover:underline" href="#the-suite">PrymAgent</a></li>
+<li><a class="hover:underline" href="#see-in-action" onclick="switchWorkTab('pages')">Pages</a></li>
+<li><a class="hover:underline" href="#see-in-action" onclick="switchWorkTab('prymsearch')">Prymsearch</a></li>
+</ul>
+</div>
+<!-- Help -->
+<div class="md:col-span-3 space-y-3">
+<div class="ui-label text-[#7D8578] uppercase tracking-wider text-[13px]">Help</div>
+<ul class="space-y-2.5 text-[15px] font-medium">
+<li><a class="hover:underline" href="https://wa.me/" rel="noopener noreferrer" target="_blank">WhatsApp support</a></li>
+<li><a class="hover:underline" href="#">Terms and Conditions</a></li>
+<li><a class="hover:underline" href="#">Privacy Policy</a></li>
+<li><a class="hover:underline" href="#">Refund Policy</a></li>
+</ul>
+</div>
+<!-- Company -->
+<div class="md:col-span-2 space-y-3">
+<div class="ui-label text-[#7D8578] uppercase tracking-wider text-[13px]">Company</div>
+<p class="text-[15px] font-medium text-[#010E09]">Lagos, Nigeria</p>
+</div>
+</div>
+<div class="pt-8 text-[14px] text-[#7D8578]">
+      © 2026 Prym Technologies Limited.
+    </div>
+</div>
+</footer>
+<!-- 12. STICKY MOBILE BOTTOM BAR -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 p-3 bg-[#010E09] border-t border-[#2A3440] z-50 flex items-center justify-between gap-4">
+<div class="text-[#F7FAF0] text-[13px] font-medium truncate">
+    PrymAgent on WhatsApp
+  </div>
+<a class="btn-pill h-[42px] px-5 bg-[#B0D226] text-[#010E09] text-[14px] font-bold whitespace-nowrap" href="https://wa.me/" rel="noopener noreferrer" target="_blank">
+    Start on WhatsApp
+  </a>
+</div>
+<!-- Vite app entry -->
+<script type="module" src="/src/main.js"></script>
+</body></html>
