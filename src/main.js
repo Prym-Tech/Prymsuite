@@ -3,6 +3,17 @@ const updateNavigation = () => nav?.classList.toggle('nav-scrolled', window.scro
 window.addEventListener('scroll', updateNavigation, { passive: true });
 updateNavigation();
 
+const waveMotions = document.querySelectorAll('.hero-wave-motion');
+const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+const syncWaveMotion = () => {
+  waveMotions.forEach((motion) => {
+    if (motionPreference.matches) motion.endElement?.();
+    else motion.beginElement?.();
+  });
+};
+if (!motionPreference.matches) syncWaveMotion();
+motionPreference.addEventListener?.('change', syncWaveMotion);
+
 const tabNames = {
   prymagent: 'PrymAgent billing',
   pages: 'Pages professional site',
